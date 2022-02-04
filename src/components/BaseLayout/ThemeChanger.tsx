@@ -7,6 +7,7 @@ const ChangeThemeBtn = styled.button`
   height: 50px;
   cursor: pointer;
   background-color: transparent;
+  color : ${props => props.theme.boxTextColor};
   border: none;
   img {
     width:100%;
