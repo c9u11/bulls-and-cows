@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import styled from "styled-components";
-import { Digit, DigitInterface } from "../components/Digit";
+import { Digit } from "../components/Digit";
 
 const Wrapper = styled(motion.div)`
   position: relative;
@@ -40,8 +40,4 @@ export const DigitTestPage = () => {
       </select>
     </Wrapper>
   );
-}
-
-function DigitInfo(arg0: string, DigitInfo: any): [any, any] {
-  throw new Error("Function not implemented.");
 }
