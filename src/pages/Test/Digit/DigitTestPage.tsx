@@ -17,7 +17,7 @@ const Wrapper = styled(motion.div)`
 `;
 export const DigitTestPage = () => {
   const [status, setStatus] = useState("initial");
-  const digitArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const digitArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   return (
     <Wrapper>
       {
@@ -26,6 +26,7 @@ export const DigitTestPage = () => {
             key={v}
             status={status}
             value={v}
+            index={v}
           ></Digit>
         )
       }
