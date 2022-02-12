@@ -33,7 +33,7 @@ export const Digit = ({ value, status, onKeyDown }: DigitInterface) => {
       borderColor: "rgba(255,255,255)"
     },
     focus: {
-      borderColor: ["rgba(255, 255, 255, 0.8)", "#777"],
+      backgroundColor: ["rgba(255, 255, 255, 0.8)", "#ddd"],
       transition: {
         repeat: Infinity,
         repeatType: "reverse" as "reverse",
