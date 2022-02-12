@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import React from "react";
 import styled from "styled-components";
 
 export interface DigitInterface {
@@ -18,7 +19,7 @@ const DigitEl = styled(motion.input)`
   border-radius: 5px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
   outline: none;
-  border: #777 3px solid;
+  border: #fff 3px solid;
   text-align: center;
   font-size: 64px;
   font-weight: bolder;
@@ -31,8 +32,6 @@ const DigitEl = styled(motion.input)`
 
 const digitVariants = {
   init: {
-    color: "rgba(255, 255, 255, 0.8)",
-    borderColor: "rgba(255,255,255)"
   },
   focus: {
     backgroundColor: ["rgba(255, 255, 255, 0.8)", "#ddd"],
@@ -52,6 +51,10 @@ const digitVariants = {
       bounce: 0.5
     }
   },
+  typedEnd: {
+    scale: 1,
+    borderColor: "#777"
+  },
   error: {
     rotateZ: [0, -3, 0, 3, 0, -3, 0, 3, 0],
     borderColor: "#ed695e",
@@ -59,6 +62,10 @@ const digitVariants = {
       duration: 0.2,
       bounce: 1
     }
+  },
+  errorEnd: {
+    rotateZ: 0,
+    borderColor: "#ed695e"
   },
   empty: {
     backgroundColor: "#ccc",
@@ -103,7 +110,7 @@ const digitVariants = {
 
 const IdleFunc = () => { }
 
-export const Digit = ({ value, status, index, disabled }: DigitInterface) => {
+export const Digit = React.memo(({ value, status, index, disabled }: DigitInterface) => {
   return (
     <DigitEl
       value={value}
@@ -116,4 +123,4 @@ export const Digit = ({ value, status, index, disabled }: DigitInterface) => {
       data-index={index}
     ></DigitEl>
   )
-}
+})
