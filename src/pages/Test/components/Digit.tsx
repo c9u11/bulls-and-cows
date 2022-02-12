@@ -1,5 +1,4 @@
-import { motion, useAnimation } from "framer-motion";
-import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export interface DigitInterface {
@@ -104,7 +103,7 @@ const digitVariants = {
 
 const IdleFunc = () => { }
 
-export const Digit = React.memo(({ value, status, index, disabled }: DigitInterface) => {
+export const Digit = ({ value, status, index, disabled }: DigitInterface) => {
   return (
     <DigitEl
       value={value}
@@ -117,4 +116,4 @@ export const Digit = React.memo(({ value, status, index, disabled }: DigitInterf
       data-index={index}
     ></DigitEl>
   )
-})
+}
