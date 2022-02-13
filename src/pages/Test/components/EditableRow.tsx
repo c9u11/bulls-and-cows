@@ -6,14 +6,11 @@ import { Digit } from "./Digit";
 
 const Wrapper = styled(motion.div)`
   position: relative;
-  height: 100vh;
   width: 100vw;
   flex-wrap: wrap;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #eee;
-  /* background: linear-gradient(135deg, rgb(238, 0, 153), rgb(221, 0, 238)); */
   gap: 20px;
 `;
 
@@ -21,6 +18,7 @@ const Wrapper = styled(motion.div)`
 export interface EditableRowInterface {
   digitNum: number;
   unique?: boolean;
+  setResult?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 interface digitInfoInterface {
@@ -30,7 +28,7 @@ interface digitInfoInterface {
   }
 }
 
-export const EditableRow = ({ digitNum, unique = true }: EditableRowInterface) => {
+export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowInterface) => {
   const digitInfoObject: digitInfoInterface = {};
   for (let i = 0; i < digitNum; i++) {
     digitInfoObject[i] = {
@@ -99,6 +97,12 @@ export const EditableRow = ({ digitNum, unique = true }: EditableRowInterface) =
         else {
           ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement).focus();
           setAll("init", "");
+          let result = ""
+          for (let i = 0; i < digitNum; i++) {
+            result += digitInfo[i].value;
+          }
+          if (setResult !== undefined)
+            setResult((prev) => [...prev, result])
         }
         break;
       case String(Number(e.key)):
@@ -131,7 +135,6 @@ export const EditableRow = ({ digitNum, unique = true }: EditableRowInterface) =
             index={v}
             status={digitInfo[v].status}
             value={digitInfo[v].value}
-            disabled={false}
           />
         ))
       }
