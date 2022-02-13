@@ -2,6 +2,6 @@ import { EditableRow } from '../components/EditableRow';
 
 export const RowTestPage = () => {
   return (
-    <EditableRow></EditableRow>
+    <EditableRow digitNum={4} unique={true} ></EditableRow>
   );
 }

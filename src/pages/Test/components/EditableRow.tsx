@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import React, { ReactEventHandler } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { Digit } from "./Digit";
@@ -15,23 +16,57 @@ const Wrapper = styled(motion.div)`
   /* background: linear-gradient(135deg, rgb(238, 0, 153), rgb(221, 0, 238)); */
   gap: 20px;
 `;
-export const EditableRow = () => {
-  const [digitInfo, setDigitInfo] = useState(new Array(4).fill(["", "initial"]))
+
+
+export interface EditableRowInterface {
+  digitNum: number;
+  unique?: boolean;
+}
+
+interface digitInfoInterface {
+  [key: string]: {
+    value: string;
+    status: string;
+  }
+}
+
+export const EditableRow = ({ digitNum, unique = true }: EditableRowInterface) => {
+  const digitInfoObject: digitInfoInterface = {};
+  for (let i = 0; i < digitNum; i++) {
+    digitInfoObject[i] = {
+      value: "",
+      status: "init"
+    }
+  }
+  const [digitInfo, setDigitInfo] = useState(digitInfoObject);
 
   const setOne = (idx: number, status: string, value?: string | undefined) => {
-    setDigitInfo(prev => {
-      if (value === undefined) value = prev[idx][0];
-      console.log(value);
-      prev[idx] = [value, status]
-      return [...prev];
+    setDigitInfo((prev) => {
+      return {
+        ...prev, [idx]: {
+          status,
+          value: value === undefined ? prev[idx].value : value,
+        }
+      };
     })
+    if (status === "typed" || status === "error")
+      setTimeout(() => {
+        setOne(idx, status + "End");
+      }, 200)
   }
   const setAll = (status: string, value?: string) => {
-    setDigitInfo(prev => {
-      return [...prev.map(v => [value === undefined ? v[0] : value, status])];
+    setDigitInfo((prev) => {
+      Object.keys(prev).map(idx => {
+        prev[idx] = {
+          status,
+          value: value === undefined ? prev[idx].value : value
+        }
+      })
+      return { ...prev };
     })
   }
-  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, idx: number) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    let idx = Number((e.target as HTMLInputElement).getAttribute("data-index"));
     const preValue = (e.target as HTMLInputElement)?.value;
     switch (e.key) {
       case "ArrowLeft":
@@ -45,16 +80,16 @@ export const EditableRow = () => {
           ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
           idx--;
         }
-        setOne(idx, "initial", "");
+        setOne(idx, "init", "");
         break;
       case "Escape":
         ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement).focus();
-        setAll("initial", "");
+        setAll("init", "");
         break;
       case "Enter":
         const errorPoint = [];
-        for (let i = 0; i < 4; i++) {
-          if (!digitInfo[i][0]) errorPoint.push(i);
+        for (let i = 0; i < digitNum; i++) {
+          if (!digitInfo[i].value) errorPoint.push(i);
         }
         if (errorPoint.length) {
           errorPoint.forEach(v => {
@@ -63,10 +98,23 @@ export const EditableRow = () => {
         }
         else {
           ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement).focus();
-          setAll("initial", "");
+          setAll("init", "");
         }
         break;
       case String(Number(e.key)):
+        if (unique) {
+          let isUnique = true;
+          for (let i = 0; i < digitNum; i++) {
+            if (idx !== i && digitInfo[i].value === e.key) {
+              isUnique = false;
+              break;
+            }
+          }
+          if (!isUnique) {
+            setOne(idx, "error", "");
+            break;
+          }
+        }
         ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
         setOne(idx, "typed", e.key);
         break;
@@ -74,16 +122,16 @@ export const EditableRow = () => {
         break;
     }
   }
-
   return (
-    <Wrapper>
+    <Wrapper onKeyDown={onKeyDown}>
       {
-        digitInfo.map((v, i) => (
+        Object.keys(digitInfo).map((v) => (
           <Digit
-            key={i}
-            status={v[1]}
-            value={v[0]}
-            onKeyDown={(e) => { onKeyDown(e, i) }}
+            key={v}
+            index={v}
+            status={digitInfo[v].status}
+            value={digitInfo[v].value}
+            disabled={false}
           />
         ))
       }
