@@ -6,7 +6,7 @@ export interface DigitInterface {
   value: string;
   status: string;
   index: string;
-  disabled?: boolean;
+  result?: boolean;
 }
 
 const DigitEl = styled(motion.input)`
@@ -30,7 +30,7 @@ const DigitEl = styled(motion.input)`
   caret-color: transparent;
 `;
 
-const digitVariants = {
+const digitVariants: { [key: string]: {} } = {
   init: {
   },
   focus: {
@@ -68,58 +68,49 @@ const digitVariants = {
     borderColor: "#ed695e"
   },
   empty: {
-    backgroundColor: "#ccc",
-    borderColor: "#777",
+    backgroundColor: ["rgab(255,255,255,0.8)", "#ccc"],
+    borderColor: ["#777", "#777"],
     rotateY: [0, 90, 0],
     transition: {
-      duration: 0,
-      delay: 0.5,
-      rotateY: {
-        duration: 1,
-        delay: 0
-      }
+      duration: 1,
+      times: [0.4, 0.5],
+      rotateY: { times: [0, 0.5, 1] }
     }
   },
   half: {
-    backgroundColor: "#edd8ad",
-    borderColor: "#f3bf4e",
+    backgroundColor: ["rgba(255,255,255,0.8)", "#edd8ad"],
+    borderColor: ["#777", "#f3bf4e"],
     rotateY: [0, 90, 0],
     transition: {
-      duration: 0,
-      delay: 0.5,
-      rotateY: {
-        duration: 1,
-        delay: 0
-      }
+      duration: 1,
+      times: [0.4, 0.5],
+      rotateY: { times: [0, 0.5, 1] }
     }
   },
   full: {
-    backgroundColor: "#a4d69c",
-    borderColor: "#62c554",
+    backgroundColor: ["rgba(255, 255, 255, 0.8)", "#a4d69c"],
+    borderColor: ["#777", "#62c554"],
     rotateY: [0, 90, 0],
     transition: {
-      duration: 0,
-      delay: 0.5,
-      rotateY: {
-        duration: 1,
-        delay: 0
-      }
+      duration: 1,
+      times: [0.4, 0.5],
+      rotateY: { times: [0, 0.5, 1] }
     }
   }
 };
 
 const IdleFunc = () => { }
 
-export const Digit = React.memo(({ value, status, index, disabled }: DigitInterface) => {
+export const Digit = React.memo(({ value, status, index, result }: DigitInterface) => {
   return (
     <DigitEl
       value={value}
-      disabled={disabled}
+      disabled={!!result}
       onChange={IdleFunc}
       maxLength={1}
-      variants={digitVariants}
-      animate={status}
-      whileFocus={"focus"}
+      variants={result ? { result: digitVariants[status] } : digitVariants}
+      animate={result ? undefined : status}
+      whileFocus={!!result ? undefined : "focus"}
       data-index={index}
     ></DigitEl>
   )
