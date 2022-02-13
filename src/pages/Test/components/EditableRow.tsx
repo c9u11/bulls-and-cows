@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { ReactEventHandler } from "react";
+import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { Digit } from "./Digit";
@@ -56,7 +56,7 @@ export const EditableRow = ({ digitNum, unique = true }: EditableRowInterface) =
   }
   const setAll = (status: string, value?: string) => {
     setDigitInfo((prev) => {
-      Object.keys(prev).map(idx => {
+      Object.keys(prev).forEach(idx => {
         prev[idx] = {
           status,
           value: value === undefined ? prev[idx].value : value
