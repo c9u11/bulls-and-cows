@@ -17,7 +17,7 @@ export const BaseLayout = () => {
   return (
     <Container>
       <ThemeChanger></ThemeChanger>
-      <Title>숫자 야구</Title>
+      <Title>Bulls and Cows</Title>
     </Container>
   )
 }
