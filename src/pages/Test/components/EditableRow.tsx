@@ -6,7 +6,7 @@ import { Digit } from "./Digit";
 
 const Wrapper = styled(motion.div)`
   position: relative;
-  width: 100vw;
+  width: 100%;
   flex-wrap: wrap;
   display: flex;
   align-items: center;
