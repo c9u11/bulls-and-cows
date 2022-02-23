@@ -49,7 +49,8 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     })
     if (status === "typed" || status === "error")
       setTimeout(() => {
-        setOne(idx, status + "End");
+        if (digitInfo[idx].value !== "")
+          setOne(idx, status + "End");
       }, 200)
   }
   const setAll = (status: string, value?: string) => {
