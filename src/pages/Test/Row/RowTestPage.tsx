@@ -12,7 +12,10 @@ const Container = styled.div`
   gap: 20px;
 `
 
-const answer = randomNum(4, true);
+const digitNum = 4;
+const isUnique = true;
+
+const answer = randomNum(digitNum, isUnique);
 
 export const RowTestPage = () => {
   const [result, setResult] = useState<string[]>([]);
@@ -24,7 +27,7 @@ export const RowTestPage = () => {
         ))
       }
       {
-        result.indexOf(answer) === -1 ? <EditableRow digitNum={4} unique={true} setResult={setResult}></EditableRow> : null
+        result.indexOf(answer) === -1 ? <EditableRow digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : null
       }
     </Container>
   );
