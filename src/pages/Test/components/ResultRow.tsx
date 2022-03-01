@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { NumString } from "../../../types/type";
 import { Digit } from "./Digit";
 
 export interface ResultRowInterface {
@@ -27,14 +28,13 @@ export const ResultRow = ({ result, answer }: ResultRowInterface) => {
   return (
     <Wrapper variants={DigitWrapperVariants} animate={"result"}>
       {
-        result.split("").map((v, i) => {
-
+        result.split("").map((v, idx) => {
           return (
             <Digit
-              key={v}
-              index={v}
-              status={v === answer[i] ? "full" : answer.indexOf(v) !== -1 ? "half" : "empty"}
-              value={v}
+              key={idx}
+              index={idx}
+              status={v === answer[idx] ? "full" : answer.indexOf(v) !== -1 ? "half" : "empty"}
+              value={v as NumString}
               result={true}
             />
           )

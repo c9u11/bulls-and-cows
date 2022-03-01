@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import { DigitStatus, NumString } from "../../../types/type";
 import { Digit } from "./Digit";
 
 const Wrapper = styled(motion.div)`
@@ -15,16 +16,16 @@ const Wrapper = styled(motion.div)`
 `;
 
 
-export interface EditableRowInterface {
+interface EditableRowInterface {
   digitNum: number;
   unique?: boolean;
   setResult?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 interface digitInfoInterface {
-  [key: string]: {
-    value: string;
-    status: string;
+  [key: number]: {
+    value: NumString;
+    status: DigitStatus;
   }
 }
 
@@ -38,7 +39,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
   }
   const [digitInfo, setDigitInfo] = useState(digitInfoObject);
 
-  const setOne = (idx: number, status: string, value?: string | undefined) => {
+  const setOne = (idx: number, status: DigitStatus, value?: NumString | undefined) => {
     setDigitInfo((prev) => {
       return {
         ...prev, [idx]: {
@@ -50,12 +51,12 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     if (status === "typed" || status === "error")
       setTimeout(() => {
         if (digitInfo[idx].value !== "")
-          setOne(idx, status + "End");
+          setOne(idx, `${status}End`);
       }, 200)
   }
-  const setAll = (status: string, value?: string) => {
+  const setAll = (status: DigitStatus, value?: NumString) => {
     setDigitInfo((prev) => {
-      Object.keys(prev).forEach(idx => {
+      Object.keys(prev).forEach((_, idx) => {
         prev[idx] = {
           status,
           value: value === undefined ? prev[idx].value : value
@@ -121,7 +122,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
           }
         }
         ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
-        setOne(idx, "typed", e.key);
+        setOne(idx, "typed", e.key as NumString);
         break;
       default:
         break;
@@ -130,12 +131,12 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
   return (
     <Wrapper onKeyDown={onKeyDown}>
       {
-        Object.keys(digitInfo).map((v) => (
+        Object.keys(digitInfo).map((_, idx) => (
           <Digit
-            key={v}
-            index={v}
-            status={digitInfo[v].status}
-            value={digitInfo[v].value}
+            key={idx}
+            index={idx}
+            status={digitInfo[idx].status}
+            value={digitInfo[idx].value}
           />
         ))
       }

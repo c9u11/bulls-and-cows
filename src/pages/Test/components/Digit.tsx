@@ -1,13 +1,17 @@
 import { motion } from "framer-motion";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { DigitStatus, NumString } from "../../../types/type";
 
 export interface DigitInterface {
-  value: string;
-  status: string;
-  index: string;
+  value: NumString;
+  status: DigitStatus;
+  index: number;
   result?: boolean;
 }
+
+type DigitVariantsInterface = { [key in DigitStatus]: {} }
+
 
 const DigitEl = styled(motion.input)`
   display: flex;
@@ -30,7 +34,7 @@ const DigitEl = styled(motion.input)`
   caret-color: transparent;
 `;
 
-const digitVariants: { [key: string]: {} } = {
+const digitVariants: DigitVariantsInterface = {
   init: {
   },
   focus: {
