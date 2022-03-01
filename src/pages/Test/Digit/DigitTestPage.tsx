@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import styled from "styled-components";
+import { DigitStatus, NumString } from "../../../types/type";
 import { Digit } from "../components/Digit";
 
 const Wrapper = styled(motion.div)`
@@ -16,23 +17,23 @@ const Wrapper = styled(motion.div)`
   gap: 20px;
 `;
 export const DigitTestPage = () => {
-  const [status, setStatus] = useState("initial");
-  const digitArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const [status, setStatus] = useState<DigitStatus>("init");
+  const digitArray: NumString[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   return (
     <Wrapper>
       {
-        digitArray.map(v =>
+        digitArray.map((v, i) =>
           <Digit
             key={v}
             status={status}
             value={v}
-            index={v}
+            index={i}
           ></Digit>
         )
       }
 
-      <select value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option>initial</option>
+      <select value={status} onChange={(e) => setStatus(e.target.value as DigitStatus)}>
+        <option>init</option>
         <option>typed</option>
         <option>error</option>
         <option>empty</option>
