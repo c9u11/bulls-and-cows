@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import styled from "styled-components"
 import { ThemeChanger } from "./ThemeChanger"
@@ -19,8 +19,10 @@ const Title = styled.h1`
   font-size: 36px;
   color : ${props => props.theme.boxTextColor};
 `
-const SubTitle = styled.h2`
+const SubTitle = styled.button`
   color : ${props => props.theme.boxTextColor};
+  background-color: unset;
+  border: none;
 `
 
 const MenuBar = styled(motion.div)`
@@ -30,7 +32,23 @@ const MenuBar = styled(motion.div)`
   background-color: rgba(255, 255, 255, 0.8);
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  span {
+    margin: 10px 0px;
+  }
 `
+
+const menuBarVariants = {
+  initial: {
+    height: "0px"
+  },
+  animate: {
+    height: "auto"
+  },
+  exit: {
+    height: "0px"
+  }
+}
 
 export const BaseLayout = () => {
   const [showing, setShowing] = useState(false);
@@ -45,16 +63,20 @@ export const BaseLayout = () => {
         </Center>
         <div>Setting</div>
       </Container>
-      {
-        showing ?
-          <MenuBar>
-            <span>Home</span>
-            <span>Challenge</span>
-            <span>Practice</span>
-            <span>Custom</span>
-          </MenuBar>
-          : null
-      }
+      <AnimatePresence>
+        {
+          showing ?
+            <MenuBar
+              {...menuBarVariants}
+            >
+              <span>Home</span>
+              <span>Challenge</span>
+              <span>Practice</span>
+              <span>Custom</span>
+            </MenuBar>
+            : null
+        }
+      </AnimatePresence>
     </>
   )
 }
