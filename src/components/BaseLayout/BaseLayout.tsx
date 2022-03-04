@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import styled from "styled-components"
 import { ThemeChanger } from "./ThemeChanger"
+import { useLocation } from 'react-router-dom'
 
 const Container = styled.header`
   display: flex;
@@ -38,6 +39,11 @@ const MenuBar = styled(motion.div)`
   }
 `
 
+const SettingButton = styled.button`
+  width: 50px;
+  height: 50px;
+`
+
 const menuBarVariants = {
   initial: {
     height: "0px"
@@ -52,16 +58,22 @@ const menuBarVariants = {
 
 export const BaseLayout = () => {
   const [showing, setShowing] = useState(false);
-
+  let subTitle = "";
+  switch (useLocation().pathname) {
+    case "/": subTitle = "Home"; break;
+    case "/Challenge": subTitle = "Challenge"; break;
+    case "/Practice": subTitle = "Practice"; break;
+    case "/Custom": subTitle = "Custom"; break;
+  }
   return (
     <>
       <Container>
         <ThemeChanger></ThemeChanger>
         <Center>
           <Title>Bulls and Cows</Title>
-          <SubTitle onClick={() => { setShowing(prev => !prev) }}>Home</SubTitle>
+          <SubTitle onClick={() => { setShowing(prev => !prev) }}>&equiv; {subTitle}</SubTitle>
         </Center>
-        <div>Setting</div>
+        <SettingButton>Setting</SettingButton>
       </Container>
       <AnimatePresence>
         {
@@ -69,10 +81,10 @@ export const BaseLayout = () => {
             <MenuBar
               {...menuBarVariants}
             >
-              <span>Home</span>
-              <span>Challenge</span>
-              <span>Practice</span>
-              <span>Custom</span>
+              {subTitle === "Home" ? null : <span>Home</span>}
+              {subTitle === "Challenge" ? null : <span>Challenge</span>}
+              {subTitle === "Practice" ? null : <span>Practice</span>}
+              {subTitle === "Custom" ? null : <span>Custom</span>}
             </MenuBar>
             : null
         }
