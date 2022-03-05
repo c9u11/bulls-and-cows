@@ -24,6 +24,7 @@ const SubTitle = styled.button`
   color : ${props => props.theme.boxTextColor};
   background-color: unset;
   border: none;
+  cursor: pointer;
 `
 
 const MenuBar = styled(motion.div)`
@@ -36,6 +37,8 @@ const MenuBar = styled(motion.div)`
   overflow: hidden;
   a {
     margin: 10px 0px;
+    color: black;
+    text-decoration: none;
   }
 `
 
@@ -62,13 +65,14 @@ export const BaseLayout = () => {
   const [showing, setShowing] = useState(false);
   const pathName = useLocation().pathname;
   let subTitle = pathName[1].toUpperCase() + pathName.slice(2);
+  const toggleShowing = () => { setShowing(prev => !prev) }
   return (
     <>
       <Container>
         <ThemeChanger></ThemeChanger>
         <Center>
           <Title>Bulls and Cows</Title>
-          <SubTitle onClick={() => { setShowing(prev => !prev) }}>&equiv; {subTitle}</SubTitle>
+          <SubTitle onClick={toggleShowing}>&equiv; {subTitle}</SubTitle>
         </Center>
         <SettingButton>Setting</SettingButton>
       </Container>
@@ -80,7 +84,7 @@ export const BaseLayout = () => {
             >
               {
                 menuList.map(v => {
-                  return subTitle !== v ? <Link key={v} to={`/${v}`}>{v}</Link> : null
+                  return subTitle !== v ? <Link key={v} to={`/${v}`} onClick={toggleShowing}>{v}</Link> : null
                 })
               }
             </MenuBar>
