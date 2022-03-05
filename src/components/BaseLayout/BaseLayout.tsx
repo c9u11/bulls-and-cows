@@ -56,15 +56,12 @@ const menuBarVariants = {
   }
 }
 
+const menuList = ["Home", "Challenge", "Practice", "Custom"];
+
 export const BaseLayout = () => {
   const [showing, setShowing] = useState(false);
-  let subTitle = "";
-  switch (useLocation().pathname) {
-    case "/": subTitle = "Home"; break;
-    case "/Challenge": subTitle = "Challenge"; break;
-    case "/Practice": subTitle = "Practice"; break;
-    case "/Custom": subTitle = "Custom"; break;
-  }
+  const pathName = useLocation().pathname;
+  let subTitle = pathName[1].toUpperCase() + pathName.slice(2);
   return (
     <>
       <Container>
@@ -81,10 +78,11 @@ export const BaseLayout = () => {
             <MenuBar
               {...menuBarVariants}
             >
-              {subTitle === "Home" ? null : <Link to="/">Home</Link>}
-              {subTitle === "Challenge" ? null : <Link to="/Challenge">Challenge</Link>}
-              {subTitle === "Practice" ? null : <Link to="/Practice">Practice</Link>}
-              {subTitle === "Custom" ? null : <Link to="/Custom">Custom</Link>}
+              {
+                menuList.map(v => {
+                  return subTitle !== v ? <Link key={v} to={`/${v}`}>{v}</Link> : null
+                })
+              }
             </MenuBar>
             : null
         }
