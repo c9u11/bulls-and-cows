@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import BaseLayout from "../components/BaseLayout";
 import Challenge from "../pages/Challenge";
 import HomePage from "../pages/Home";
@@ -9,11 +9,12 @@ const RouterConfig = () => {
   return (
     <Routes>
       <Route element={<BaseLayout />}>
-        <Route path={"/test/digit"} element={<DigitTestPage />} />
-        <Route path={"/test/row"} element={<RowTestPage />} />
-        <Route path={"/challenge"} element={<Challenge />} />
-        <Route path={"/"} element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/challenge" element={<Challenge />} />
+        <Route path="/test/row" element={<RowTestPage />} />
+        <Route path="/test/digit" element={<DigitTestPage />} />
       </Route>
+      <Route path="/*" element={<Navigate replace to="/home" />} />
     </Routes>
   )
 }
