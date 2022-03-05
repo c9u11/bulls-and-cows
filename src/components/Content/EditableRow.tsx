@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { DigitStatus, NumString } from "../../../types/type";
+import { DigitStatus, NumString } from "../../types/type";
 import { Digit } from "./Digit";
 
 const Wrapper = styled(motion.div)`

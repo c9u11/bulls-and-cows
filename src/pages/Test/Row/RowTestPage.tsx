@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { EditableRow } from '../components/EditableRow';
-import { ResultRow } from '../components/ResultRow';
+import { EditableRow } from '../../../components/Content/EditableRow';
+import { ResultRow } from '../../../components/Content/ResultRow';
+import { randomNum } from '../../../util';
 
 const Container = styled.div`
   display: flex;
@@ -31,22 +32,4 @@ export const RowTestPage = () => {
       }
     </Container>
   );
-}
-
-function randomNum(digitNum: number, unique: boolean) {
-  const ouputArray: number[] = [];
-  function makeNum() {
-    if (ouputArray.length < digitNum) {
-      let n = Math.floor(Math.random() * 10);
-      if (!unique || notSame(n)) {
-        ouputArray.push(n);
-      }
-      makeNum();
-    }
-    function notSame(n: number) {
-      return ouputArray.every((e) => n !== e);
-    }
-  }
-  makeNum();
-  return ouputArray.join("");
 }

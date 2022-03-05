@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { NumString } from "../../../types/type";
+import { NumString } from "../../types/type";
 import { Digit } from "./Digit";
 
 export interface ResultRowInterface {
