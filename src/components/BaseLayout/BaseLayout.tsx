@@ -17,14 +17,14 @@ const Center = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  color : ${props => props.theme.boxTextColor};
 `
 const Title = styled.h1`
   font-weight: bold;
   font-size: 36px;
-  color : ${props => props.theme.boxTextColor};
 `
 const SubTitle = styled(motion.button)`
-  color : ${props => props.theme.boxTextColor};
+  color: inherit;
   background-color: unset;
   border: none;
   cursor: pointer;
@@ -45,14 +45,17 @@ const MenuBar = styled(motion.div)`
   position: absolute;
   display: flex;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: ${props => props.theme.boxBgColor + "bb"};
   flex-direction: column;
   align-items: center;
   overflow: hidden;
   a {
     margin: 10px 0px;
-    color: black;
+    color: ${props => props.theme.borderColor};
     text-decoration: none;
+  }
+  a:hover {
+    color: ${props => props.theme.accentColor};
   }
 `
 
