@@ -38,7 +38,7 @@ const MenuIcon = styled(motion.span)`
   border: none;
   font-size: inherit;
   cursor: pointer;
-  padding: 5px;
+  padding: 0px 5px;
 `
 
 const MenuBar = styled(motion.div)`
