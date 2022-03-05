@@ -12,18 +12,31 @@ const Container = styled.header`
   height: 50px;
 `
 const Center = styled.div`
+  display: flex;
   flex:1;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `
 const Title = styled.h1`
   font-weight: bold;
   font-size: 36px;
   color : ${props => props.theme.boxTextColor};
 `
-const SubTitle = styled.button`
+const SubTitle = styled(motion.button)`
   color : ${props => props.theme.boxTextColor};
   background-color: unset;
   border: none;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const MenuIcon = styled(motion.button)`
+  background-color: unset;
+  border: none;
+  font-size: inherit;
   cursor: pointer;
 `
 
@@ -72,7 +85,10 @@ export const BaseLayout = () => {
         <ThemeChanger></ThemeChanger>
         <Center>
           <Title>Bulls and Cows</Title>
-          <SubTitle onClick={toggleShowing}>&equiv; {subTitle}</SubTitle>
+          <SubTitle whileHover="hover" onClick={toggleShowing}>
+            <MenuIcon variants={{ hover: { scale: 1.3 } }}>&equiv;</MenuIcon>
+            {` ${subTitle}`}
+          </SubTitle>
         </Center>
         <SettingButton>Setting</SettingButton>
       </Container>
