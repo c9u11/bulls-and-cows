@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import styled from "styled-components"
 import { ThemeChanger } from "./ThemeChanger"
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation, Outlet } from 'react-router-dom'
 
 const Container = styled.header`
   display: flex;
@@ -34,7 +34,7 @@ const MenuBar = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  span {
+  a {
     margin: 10px 0px;
   }
 `
@@ -81,14 +81,15 @@ export const BaseLayout = () => {
             <MenuBar
               {...menuBarVariants}
             >
-              {subTitle === "Home" ? null : <span>Home</span>}
-              {subTitle === "Challenge" ? null : <span>Challenge</span>}
-              {subTitle === "Practice" ? null : <span>Practice</span>}
-              {subTitle === "Custom" ? null : <span>Custom</span>}
+              {subTitle === "Home" ? null : <Link to="/">Home</Link>}
+              {subTitle === "Challenge" ? null : <Link to="/Challenge">Challenge</Link>}
+              {subTitle === "Practice" ? null : <Link to="/Practice">Practice</Link>}
+              {subTitle === "Custom" ? null : <Link to="/Custom">Custom</Link>}
             </MenuBar>
             : null
         }
       </AnimatePresence>
+      <Outlet></Outlet>
     </>
   )
 }

@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import BaseLayout from "../../components/BaseLayout"
 
 const Container = styled.div`
   min-height: 100vh;
@@ -8,11 +7,8 @@ const Container = styled.div`
 
 export const HomePage = () => {
   return (
-    <>
-      <BaseLayout />
-      <Container>
-        <span>tes123t</span>
-      </Container>
-    </>
+    <Container>
+      <span>tes123t</span>
+    </Container>
   )
 }
