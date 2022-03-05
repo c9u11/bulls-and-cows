@@ -33,11 +33,12 @@ const SubTitle = styled(motion.button)`
   align-items: center;
   justify-content: center;
 `
-const MenuIcon = styled(motion.button)`
+const MenuIcon = styled(motion.span)`
   background-color: unset;
   border: none;
   font-size: inherit;
   cursor: pointer;
+  padding: 5px;
 `
 
 const MenuBar = styled(motion.div)`
