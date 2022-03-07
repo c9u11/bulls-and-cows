@@ -6,6 +6,7 @@ import { Link, useLocation, Outlet } from 'react-router-dom'
 
 const Container = styled.header`
   position: fixed;
+  top: 0px;
   width: 100%;
   z-index: 999;
   display: flex;
@@ -76,6 +77,15 @@ const SettingButton = styled.button`
   height: 50px;
 `
 
+const Body = styled.div`
+  position: relative;
+  max-width: 100vw;
+  min-height: calc(100vh - 70px);
+  margin-top: 70px;
+  background-color: ${props => props.theme.bgColor};
+  color: ${props => props.theme.primaryTextColor};
+`
+
 const menuBarVariants = {
   initial: {
     height: "0px"
@@ -125,7 +135,9 @@ export const BaseLayout = () => {
           }
         </AnimatePresence>
       </Container>
-      <Outlet></Outlet>
+      <Body>
+        <Outlet></Outlet>
+      </Body>
     </>
   )
 }
