@@ -5,12 +5,6 @@ import { ResultRow } from "../../components/Content/ResultRow";
 import { randomNum } from "../../util";
 
 const Container = styled.div`
-  min-height: 100vh;
-  background-color: ${props => props.theme.bgColor};
-  display: flex;
-  flex-direction: column;
-  padding: 100px 0px 30px 0px;
-  gap : 30px;
 `
 
 const digitNum = 4;
