@@ -109,28 +109,9 @@ export const BaseLayout = () => {
         </Center>
         <SettingButton>Setting</SettingButton>
       </Container>
-<<<<<<< HEAD
-  <Body>
-    <Outlet></Outlet>
-  </Body>
-=======
-      <AnimatePresence>
-        {
-          showing ?
-            <MenuBar
-              {...menuBarVariants}
-            >
-              {
-                menuList.map(v => {
-                  return subTitle !== v ? <Link key={v} to={`/${v}`} onClick={toggleShowing}>{v}</Link> : null
-                })
-              }
-            </MenuBar>
-            : null
-        }
-      </AnimatePresence>
-      <Outlet></Outlet>
->>>>>>> parent of 8f252dd (STYLE : TopBar Fixed로 수정)
+      <Body>
+        <Outlet></Outlet>
+      </Body>
     </>
   )
 }
