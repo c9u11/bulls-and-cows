@@ -22,10 +22,6 @@ export const ThemeChanger = () => {
     <ChangeThemeBtn
       onClick={toggleDarkAtom}
     >
-      {/* <img
-        src={isDark ? "" : ""}
-        alt={isDark ? "" : ""}>
-      </img> */}
       {isDark ?
         <img src="/img/night.png" alt="Set Light Mode"></img>
         : <img src="/img/sun.png" alt="Set Dark Mode"></img>
