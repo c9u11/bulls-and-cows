@@ -10,7 +10,7 @@ const ChangeThemeBtn = styled.button`
   color : ${props => props.theme.boxTextColor};
   border: none;
   img {
-    width:100%;
+    width:80%;
   }
 `;
 
@@ -24,11 +24,12 @@ export const ThemeChanger = () => {
     >
       {/* <img
         src={isDark ? "" : ""}
-        alt="Change Theme Botton">
+        alt={isDark ? "" : ""}>
       </img> */}
-      <span>
-        {isDark ? "Dark" : "Light"}
-      </span>
+      {isDark ?
+        <img src="/img/night.png" alt="Set Light Mode"></img>
+        : <img src="/img/sun.png" alt="Set Dark Mode"></img>
+      }
     </ChangeThemeBtn>
   )
 }

@@ -17,7 +17,7 @@ export const darkTheme: DefaultTheme = {
   primaryTextColor: "#FFFFFF",
   secondaryTextColor: "#C4C9D4",
   errorColor: "#B42818",
-  accentColor: "#FF9500",
+  accentColor: "#FBD306",
   boxBgColor: "#171a21",
   boxTextColor: "#f1f2f4"
 }

@@ -10,9 +10,13 @@ const Container = styled.header`
   z-index: 555;
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   background-color: ${props => props.theme.boxBgColor};
   over-flow: visible;
   height: 70px;
+  &>* {
+    margin: 0px 10px;
+  }
 `
 
 const SettingButton = styled.button`
