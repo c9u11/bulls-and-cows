@@ -7,20 +7,12 @@ const Container = styled.header`
   position: fixed;
   top: 0px;
   width: 100%;
-  z-index: 999;
+  z-index: 555;
   display: flex;
   align-items: center;
   background-color: ${props => props.theme.boxBgColor};
   over-flow: visible;
-  padding: 10px;
-  height: 50px;
-`
-const Row = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  margin: 10px;
-  height: 50px;
+  height: 70px;
 `
 
 const SettingButton = styled.button`
