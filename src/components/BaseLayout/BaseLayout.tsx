@@ -12,14 +12,7 @@ const Container = styled.header`
   display: flex;
   align-items: center;
   background-color: ${props => props.theme.boxBgColor};
-  flex-direction : column;
-  over-flow: visible;
-`
-const Row = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  margin: 10px;
+  padding: 10px;
   height: 50px;
 `
 const Center = styled.div`
@@ -54,8 +47,6 @@ const MenuIcon = styled(motion.span)`
 
 const MenuBar = styled(motion.div)`
   position: absolute;
-  bottom: 0px;
-  transform: translate(0, 100%);
   display: flex;
   width: 100%;
   background-color: ${props => props.theme.boxBgColor + "bb"};
@@ -108,32 +99,15 @@ export const BaseLayout = () => {
   return (
     <>
       <Container>
-        <Row>
-          <ThemeChanger></ThemeChanger>
-          <Center>
-            <Title>Bulls and Cows</Title>
-            <SubTitle whileHover="hover" onClick={toggleShowing}>
-              <MenuIcon variants={{ hover: { scale: 1.3 } }}>&equiv;</MenuIcon>
-              {` ${subTitle}`}
-            </SubTitle>
-          </Center>
-          <SettingButton>Setting</SettingButton>
-        </Row>
-        <AnimatePresence>
-          {
-            showing ?
-              <MenuBar
-                {...menuBarVariants}
-              >
-                {
-                  menuList.map(v => {
-                    return subTitle !== v ? <Link key={v} to={`/${v}`} onClick={toggleShowing}>{v}</Link> : null
-                  })
-                }
-              </MenuBar>
-              : null
-          }
-        </AnimatePresence>
+        <ThemeChanger></ThemeChanger>
+        <Center>
+          <Title>Bulls and Cows</Title>
+          <SubTitle whileHover="hover" onClick={toggleShowing}>
+            <MenuIcon variants={{ hover: { scale: 1.3 } }}>&equiv;</MenuIcon>
+            {` ${subTitle}`}
+          </SubTitle>
+        </Center>
+        <SettingButton>Setting</SettingButton>
       </Container>
       <Body>
         <Outlet></Outlet>
