@@ -5,6 +5,10 @@ import { ResultRow } from "../../components/Content/ResultRow";
 import { randomNum } from "../../util";
 
 const Container = styled.div`
+  display:flex;
+  flex-direction: column;
+  padding: 16px 0px;
+  gap: 16px;
 `
 
 const digitNum = 4;
