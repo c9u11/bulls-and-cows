@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { ThemeChanger } from "./ThemeChanger"
 import { Outlet } from 'react-router-dom'
 import { HeaderMain } from "./HeaderMain"
+import { modalAtom } from "../../atom/modalAtom"
+import { useSetRecoilState } from "recoil"
 
 const Container = styled.header`
   position: fixed;
@@ -34,12 +36,13 @@ const Body = styled.div`
 `
 
 export const BaseLayout = () => {
+  const setModal = useSetRecoilState(modalAtom);
   return (
     <>
       <Container>
         <ThemeChanger></ThemeChanger>
         <HeaderMain></HeaderMain>
-        <SettingButton>Setting</SettingButton>
+        <SettingButton onClick={() => { setModal("setting") }}>Setting</SettingButton>
       </Container>
       <Body>
         <Outlet></Outlet>

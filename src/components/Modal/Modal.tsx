@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { modalAtom } from '../../atom/modalAtom';
 import { useRecoilState } from "recoil";
 import { Test } from "./Test";
+import { Setting } from "./Setting";
 
 const Container = styled.div`
   width: 100%;
@@ -15,6 +16,7 @@ const Container = styled.div`
 const returnModal = (modal: string) => {
   switch (modal) {
     case "test": return <Test />
+    case "setting": return <Setting />
     default: return null
   }
 }
