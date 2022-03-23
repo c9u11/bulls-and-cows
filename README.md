@@ -11,3 +11,5 @@
 기존의 숫자야구에서 쉬운 난이도를 추가하여 아래와 같이 개발하였습니다.
 - Easy : 추측한 숫자 위치에 따른 Strike 또는 Ball 여부 제공 (EX : SXXB)
 - Normal : 추측한 숫자들의 Strike 및 Ball의 총 갯수 제공 (EX : 1S 1B)
+
+## Feature
