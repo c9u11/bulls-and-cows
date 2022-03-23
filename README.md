@@ -13,3 +13,7 @@
 - Normal : 추측한 숫자들의 Strike 및 Ball의 총 갯수 제공 (EX : 1S 1B)
 
 ## Feature
+- Light/Dark Mode
+- 도움말 Modal
+- 난이도 설정
+- 게임 내용 자동 저장
