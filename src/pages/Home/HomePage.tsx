@@ -10,12 +10,14 @@ const ModalBtn = styled.button`
   position: absolute;
   bottom: 50px;
   right: 50px;
-  background-color: ${props => props.theme.boxTextColor}33;
-  color: ${props => props.theme.boxTextColor};
+  background-color: ${props => props.theme.accentColor};
+  color: ${props => props.theme.boxBgColor};
   border-radius: 50%;
-  border: ${props => props.theme.boxTextColor}11 3px solid;
+  border: none;
   width: 50px;
   height: 50px;
+  font-size: 25px;
+  font-weight: bolder;
 `
 
 export const HomePage = () => {
