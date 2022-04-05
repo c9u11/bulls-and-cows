@@ -2,8 +2,6 @@ import styled from "styled-components"
 import { ThemeChanger } from "./ThemeChanger"
 import { Outlet } from 'react-router-dom'
 import { HeaderMain } from "./HeaderMain"
-import { modalAtom } from "../../atom/modalAtom"
-import { useSetRecoilState } from "recoil"
 import { SettingButton } from "./SettingButton"
 
 const Container = styled.header`
