@@ -16,7 +16,7 @@ const ModalBtn = styled.button`
   border: none;
   width: 50px;
   height: 50px;
-  font-size: 25px;
+  font-size: 15px;
   font-weight: bolder;
 `
 
@@ -26,7 +26,7 @@ export const HomePage = () => {
   return (
     <Container>
       <span>tes123t</span>
-      <ModalBtn onClick={() => { setModal("test") }}>?</ModalBtn>
+      <ModalBtn onClick={() => { setModal("test") }}>Help</ModalBtn>
     </Container>
   )
 }
