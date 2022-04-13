@@ -18,6 +18,8 @@ const Background = styled.div`
 const Container = styled.div`
   background-color: ${props => props.theme.boxBgColor};
   color: ${props => props.theme.boxTextColor};
+  border: ${props => props.theme.borderColor} 1px solid;
+  border-radius: 10px;
   padding: 20px;
 `
 
@@ -32,15 +34,18 @@ export const Modal = () => {
   const [modal, setModal] = useRecoilState(modalAtom);
   const closeModal = () => { setModal("") }
   return (
-    <Background>
+    <>
       {
         modal
-          ? <Container>
-            {returnModal(modal)}
-            <button onClick={closeModal}>X</button>
-          </Container>
+          ?
+          <Background>
+            <Container>
+              {returnModal(modal)}
+              <button onClick={closeModal}>X</button>
+            </Container>
+          </Background>
           : null
       }
-    </Background>
+    </>
   )
 }
