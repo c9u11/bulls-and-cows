@@ -16,11 +16,31 @@ const Background = styled.div`
   background: #00000088;
 `
 const Container = styled.div`
+  position: relative;
   background-color: ${props => props.theme.boxBgColor};
   color: ${props => props.theme.boxTextColor};
   border: ${props => props.theme.borderColor} 1px solid;
   border-radius: 10px;
-  padding: 20px;
+  padding: 32px 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90%;
+`
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: #00000000;
+  color: ${props => props.theme.boxTextColor};
+  font-weight: bolder;
+  line-height: 24px;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0px;
 `
 
 const returnModal = (modal: string) => {
@@ -41,7 +61,7 @@ export const Modal = () => {
           <Background>
             <Container>
               {returnModal(modal)}
-              <button onClick={closeModal}>X</button>
+              <CloseButton onClick={closeModal}>&#935;</CloseButton>
             </Container>
           </Background>
           : null
