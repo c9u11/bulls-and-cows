@@ -21,6 +21,7 @@ const Container = styled.header`
 `
 
 const Body = styled.div`
+  display: flex;
   position: relative;
   max-width: 100vw;
   min-height: calc(100vh - 70px);

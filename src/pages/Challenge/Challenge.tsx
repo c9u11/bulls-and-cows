@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 16px 0px;
   gap: 16px;
+  flex-grow: 1;
 `
 
 const digitNum = 4;
@@ -19,7 +20,7 @@ const answer = randomNum(digitNum, isUnique);
 export const Challenge = () => {
   const [result, setResult] = useState<string[]>([]);
   return (
-    <Container>
+    <Container onClick={(e) => console.log("Focus!!")}>
       {
         result.map((v, i) => (
           <ResultRow key={`ResultRow${i}`} result={v} answer={answer}></ResultRow>
