@@ -29,16 +29,6 @@ interface digitInfoInterface {
   }
 }
 
-const focusElement = (el: HTMLElement) => {
-  const currentEl = document.getElementById("focusEl")
-  if (currentEl) currentEl.id = "";
-
-  if (el) {
-    el.focus();
-    el.id = "focusEl";
-  }
-}
-
 export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowInterface) => {
   const digitInfoObject: digitInfoInterface = {};
   for (let i = 0; i < digitNum; i++) {
@@ -80,20 +70,20 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     const preValue = (e.target as HTMLInputElement)?.value;
     switch (e.key) {
       case "ArrowLeft":
-        focusElement((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement);
+        ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
         break;
       case "ArrowRight":
-        focusElement((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement);
+        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
         break;
       case "Backspace":
         if (!preValue) {
-          focusElement((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement);
+          ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
           idx--;
         }
         setOne(idx, "init", "");
         break;
       case "Escape":
-        focusElement((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement);
+        ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement)?.focus();
         setAll("init", "");
         break;
       case "Enter":
@@ -107,7 +97,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
           })
         }
         else {
-          focusElement((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement);
+          ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement)?.focus();
           setAll("init", "");
           let result = ""
           for (let i = 0; i < digitNum; i++) {
@@ -131,7 +121,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
             break;
           }
         }
-        focusElement((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement);
+        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
         setOne(idx, "typed", e.key as NumString);
         break;
       default:
@@ -139,7 +129,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     }
   }
   useEffect(() => {
-    focusElement(document.getElementById("editableRow")?.firstElementChild as HTMLElement);
+    (document.getElementById("editableRow")?.firstElementChild as HTMLElement)?.focus();
   }, [])
   return (
     <Wrapper id="editableRow" onKeyDown={onKeyDown}>

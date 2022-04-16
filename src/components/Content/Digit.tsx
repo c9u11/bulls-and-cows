@@ -105,6 +105,17 @@ const digitVariants: DigitVariantsInterface = {
 
 const IdleFunc = () => { }
 
+const onFocus = () => {
+  const currentEl = document.getElementById("focusEl")
+  if (currentEl) currentEl.id = "";
+
+  const el = document.activeElement as HTMLElement;
+  if (el) {
+    el.focus();
+    el.id = "focusEl";
+  }
+}
+
 export const Digit = React.memo(({ value, status, index, result }: DigitInterface) => {
   return (
     <DigitEl
@@ -115,6 +126,7 @@ export const Digit = React.memo(({ value, status, index, result }: DigitInterfac
       variants={result ? { result: digitVariants[status] } : digitVariants}
       animate={result ? undefined : status}
       whileFocus={!!result ? undefined : "focus"}
+      onFocus={onFocus}
       data-index={index}
     ></DigitEl>
   )
