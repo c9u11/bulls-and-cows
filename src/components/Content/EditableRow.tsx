@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
@@ -26,6 +26,16 @@ interface digitInfoInterface {
   [key: number]: {
     value: NumString;
     status: DigitStatus;
+  }
+}
+
+const focusElement = (el: HTMLElement) => {
+  const currentEl = document.getElementById("focusEl")
+  if (currentEl) currentEl.id = "";
+
+  if (el) {
+    el.focus();
+    el.id = "focusEl";
   }
 }
 
@@ -70,20 +80,20 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     const preValue = (e.target as HTMLInputElement)?.value;
     switch (e.key) {
       case "ArrowLeft":
-        ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
+        focusElement((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement);
         break;
       case "ArrowRight":
-        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
+        focusElement((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement);
         break;
       case "Backspace":
         if (!preValue) {
-          ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
+          focusElement((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement);
           idx--;
         }
         setOne(idx, "init", "");
         break;
       case "Escape":
-        ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement).focus();
+        focusElement((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement);
         setAll("init", "");
         break;
       case "Enter":
@@ -97,7 +107,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
           })
         }
         else {
-          ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement).focus();
+          focusElement((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement);
           setAll("init", "");
           let result = ""
           for (let i = 0; i < digitNum; i++) {
@@ -121,15 +131,18 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
             break;
           }
         }
-        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
+        focusElement((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement);
         setOne(idx, "typed", e.key as NumString);
         break;
       default:
         break;
     }
   }
+  useEffect(() => {
+    focusElement(document.getElementById("editableRow")?.firstElementChild as HTMLElement);
+  }, [])
   return (
-    <Wrapper onKeyDown={onKeyDown}>
+    <Wrapper id="editableRow" onKeyDown={onKeyDown}>
       {
         Object.keys(digitInfo).map((_, idx) => (
           <Digit
