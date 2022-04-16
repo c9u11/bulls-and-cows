@@ -20,7 +20,7 @@ const answer = randomNum(digitNum, isUnique);
 export const Challenge = () => {
   const [result, setResult] = useState<string[]>([]);
   return (
-    <Container onClick={(e) => console.log("Focus!!")}>
+    <Container onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
       {
         result.map((v, i) => (
           <ResultRow key={`ResultRow${i}`} result={v} answer={answer}></ResultRow>
