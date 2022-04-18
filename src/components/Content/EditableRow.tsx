@@ -76,7 +76,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
         ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
         break;
       case "Backspace":
-        if (!preValue) {
+        if (idx !== 0 && !preValue) {
           ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
           idx--;
         }
