@@ -23,8 +23,8 @@ const Container = styled.div`
 const digitNum = 4;
 const isUnique = true;
 
-// const answer = randomNum(digitNum, isUnique);
-const answer = "0517";
+const answer = randomNum(digitNum, isUnique);
+// const answer = "0517";
 
 const ChallengeStateString = window.localStorage.getItem("ChallengeState");
 const ChallengeStateJson: ChallengeStateInterface = ChallengeStateString && JSON.parse(ChallengeStateString);

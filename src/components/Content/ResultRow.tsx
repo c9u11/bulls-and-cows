@@ -20,7 +20,7 @@ const Wrapper = styled(motion.div)`
 const DigitWrapperVariants = {
   result: {
     transition: {
-      staggerChildren: 0.5
+      staggerChildren: 0.3
     }
   }
 }
