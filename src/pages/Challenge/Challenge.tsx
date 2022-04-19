@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { EditableRow } from "../../components/Content/EditableRow";
 import { NumberKeyboard } from "../../components/Content/NumberKeyboard";
 import { ResultRow } from "../../components/Content/ResultRow";
 import { randomNum } from "../../util";
+
+interface ChallengeStateInterface {
+  "boardState": string[]
+  "gameStatus": string
+  "lastPlayedTs": number
+  "lastCompletedTs": number
+  "hardMode": boolean
+}
 
 const Container = styled.div`
   display:flex;
@@ -17,9 +25,20 @@ const digitNum = 4;
 const isUnique = true;
 
 const answer = randomNum(digitNum, isUnique);
+// const answer = "0517";
+
+const ChallengeStateString = window.localStorage.getItem("ChallengeState");
+const ChallengeStateJson: ChallengeStateInterface = ChallengeStateString && JSON.parse(ChallengeStateString);
 
 export const Challenge = () => {
   const [result, setResult] = useState<string[]>([]);
+  useEffect(() => {
+    setResult(ChallengeStateJson.boardState);
+  }, [])
+  if (result.length) {
+    ChallengeStateJson.boardState = result;
+    window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson))
+  }
   return (
     <Container onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
       {
