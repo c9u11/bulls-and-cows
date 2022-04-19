@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components"
 import { EditableRow } from "../../components/Content/EditableRow";
+import { NumberKeyboard } from "../../components/Content/NumberKeyboard";
 import { ResultRow } from "../../components/Content/ResultRow";
 import { randomNum } from "../../util";
 
@@ -29,6 +30,7 @@ export const Challenge = () => {
       {
         result.indexOf(answer) === -1 ? <EditableRow digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : null
       }
+      <NumberKeyboard></NumberKeyboard>
     </Container>
   );
 }
