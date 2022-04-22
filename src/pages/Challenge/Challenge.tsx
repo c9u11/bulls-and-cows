@@ -27,8 +27,16 @@ const isUnique = true;
 const answer = randomNum(digitNum, isUnique);
 // const answer = "0517";
 
+const DEFAULT_STATE: ChallengeStateInterface = {
+  "boardState": [],
+  "gameStatus": "IN_PROGRESS",
+  "lastPlayedTs": 1650124265706,
+  "lastCompletedTs": 1650124265706,
+  "hardMode": false
+}
+
 const ChallengeStateString = window.localStorage.getItem("ChallengeState");
-const ChallengeStateJson: ChallengeStateInterface = ChallengeStateString && JSON.parse(ChallengeStateString);
+const ChallengeStateJson: ChallengeStateInterface = (ChallengeStateString && JSON.parse(ChallengeStateString)) || DEFAULT_STATE;
 
 export const Challenge = () => {
   const [result, setResult] = useState<string[]>([]);
