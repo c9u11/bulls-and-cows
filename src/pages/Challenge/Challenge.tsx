@@ -44,8 +44,10 @@ export const Challenge = () => {
     setResult(ChallengeStateJson.boardState);
   }, [])
   if (result.length) {
+    ChallengeStateJson.lastPlayedTs = new Date().getTime();
     ChallengeStateJson.boardState = result;
-    window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson))
+    window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
+    console.log(ChallengeStateJson);
   }
   return (
     <Container onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
