@@ -41,7 +41,11 @@ const ChallengeStateJson: ChallengeStateInterface = (ChallengeStateString && JSO
 export const Challenge = () => {
   const [result, setResult] = useState<string[]>([]);
   useEffect(() => {
-    setResult(ChallengeStateJson.boardState);
+    setResult(() => {
+      let boardState: string[] = ChallengeStateJson.boardState;
+      if (new Date(ChallengeStateJson.lastPlayedTs).getDate() !== new Date().getDate()) boardState = [];
+      return boardState;
+    });
   }, [])
   if (result.length) {
     ChallengeStateJson.lastPlayedTs = new Date().getTime();
