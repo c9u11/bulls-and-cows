@@ -47,9 +47,12 @@ export const Challenge = () => {
       return boardState;
     });
   }, [])
-  if (result.length) {
-    ChallengeStateJson.lastPlayedTs = new Date().getTime();
+  if (result.length && result.length != ChallengeStateJson.boardState.length) {
+    const currentTime = new Date().getTime();
     ChallengeStateJson.boardState = result;
+    ChallengeStateJson.lastPlayedTs = currentTime;
+    if (result[result.length - 1] === answer)
+      ChallengeStateJson.lastCompletedTs = currentTime;
     window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
     console.log(ChallengeStateJson);
   }
