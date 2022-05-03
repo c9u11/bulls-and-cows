@@ -1,17 +1,13 @@
+var seedrandom = require('seedrandom');
 export const randomNum = (digitNum: number, unique: boolean) => {
-  const ouputArray: number[] = [];
-  function makeNum() {
-    if (ouputArray.length < digitNum) {
-      let n = Math.floor(Math.random() * 10);
-      if (!unique || notSame(n)) {
-        ouputArray.push(n);
-      }
-      makeNum();
-    }
-    function notSame(n: number) {
-      return ouputArray.every((e) => n !== e);
-    }
+  let nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const date = new Date();
+  let seed = seedrandom(`${date.getFullYear()}${date.getMonth()}${date.getDate()}`);
+  let output = "";
+  for (let i = 0; i < digitNum; i++) {
+    const order = Math.floor(seed() * nums.length);
+    output += nums[order];
+    if (unique) nums.splice(order, 1);
   }
-  makeNum();
-  return ouputArray.join("");
+  return output;
 }
