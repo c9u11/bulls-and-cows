@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
