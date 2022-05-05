@@ -5,8 +5,8 @@ import { HeaderMain } from "./HeaderMain"
 import { SettingButton } from "./SettingButton"
 
 const Container = styled.header`
-  position: fixed;
-  top: 0px;
+  position: relative;
+  top: 0%;
   width: 100%;
   z-index: 555;
   display: flex;
@@ -14,18 +14,17 @@ const Container = styled.header`
   justify-content: space-evenly;
   background-color: ${props => props.theme.boxBgColor};
   over-flow: visible;
-  height: 70px;
+  height: var(--header-height);
   &>* {
-    margin: 0px 10px;
+    margin: 0% var(--default-gap);
   }
 `
 
 const Body = styled.div`
   display: flex;
   position: relative;
-  max-width: 100vw;
-  min-height: calc(100vh - 70px);
-  margin-top: 70px;
+  min-height: calc(100vh - var(--header-height));
+  margin: 0% auto;
   background-color: ${props => props.theme.bgColor};
   color: ${props => props.theme.primaryTextColor};
 `
