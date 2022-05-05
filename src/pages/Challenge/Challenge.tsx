@@ -15,9 +15,10 @@ interface ChallengeStateInterface {
 
 const Container = styled.div`
   display:flex;
+  max-width: var(--game-max-width);
+  margin: var(--default-gap) auto;
   flex-direction: column;
-  padding: 16px 0px;
-  gap: 16px;
+  gap: var(--default-gap);
   flex-grow: 1;
 `
 
