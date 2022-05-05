@@ -68,7 +68,6 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let idx = Number((e.target as HTMLInputElement).getAttribute("data-index"));
     const preValue = (e.target as HTMLInputElement)?.value;
-    console.log(e.key);
     switch (e.key) {
       case "ArrowLeft":
         ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();

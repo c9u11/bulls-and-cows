@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components"
+import { BlankRow } from "../../components/Content/BlankRow";
 import { EditableRow } from "../../components/Content/EditableRow";
 import { NumberKeyboard } from "../../components/Content/NumberKeyboard";
 import { ResultRow } from "../../components/Content/ResultRow";
@@ -52,10 +53,9 @@ export const Challenge = () => {
     const currentTime = new Date().getTime();
     ChallengeStateJson.boardState = result;
     ChallengeStateJson.lastPlayedTs = currentTime;
-    if (result[result.length - 1] === answer)
+    if (result.indexOf(answer) === -1)
       ChallengeStateJson.lastCompletedTs = currentTime;
     window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
-    console.log(ChallengeStateJson);
   }
   return (
     <Container onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
@@ -65,7 +65,10 @@ export const Challenge = () => {
         ))
       }
       {
-        result.indexOf(answer) === -1 ? <EditableRow digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : null
+        new Array(5 - result.length).fill(" ").map((v, i) =>
+          (!i && result.indexOf(answer) === -1) ?
+            <EditableRow key={`EditableRow${0}`} digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={digitNum}></BlankRow>
+        )
       }
       <NumberKeyboard></NumberKeyboard>
     </Container>
