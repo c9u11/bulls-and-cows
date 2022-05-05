@@ -47,7 +47,7 @@ export const Challenge = () => {
       return boardState;
     });
   }, [])
-  if (result.length && result.length != ChallengeStateJson.boardState.length) {
+  if (result.length && result.length !== ChallengeStateJson.boardState.length) {
     const currentTime = new Date().getTime();
     ChallengeStateJson.boardState = result;
     ChallengeStateJson.lastPlayedTs = currentTime;
