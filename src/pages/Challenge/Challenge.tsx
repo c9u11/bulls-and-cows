@@ -53,7 +53,7 @@ export const Challenge = () => {
     const currentTime = new Date().getTime();
     ChallengeStateJson.boardState = result;
     ChallengeStateJson.lastPlayedTs = currentTime;
-    if (result.indexOf(answer) === -1)
+    if (result.indexOf(answer) !== -1)
       ChallengeStateJson.lastCompletedTs = currentTime;
     window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
   }
