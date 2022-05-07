@@ -14,13 +14,22 @@ interface ChallengeStateInterface {
   "hardMode": boolean
 }
 
-const Container = styled.div`
+const Game = styled.div`
   display:flex;
   max-width: var(--game-max-width);
   margin: var(--default-gap) auto;
   flex-direction: column;
-  gap: var(--default-gap);
   flex-grow: 1;
+`
+
+const Board = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  gap: var(--default-gap);
 `
 
 const digitNum = 4;
@@ -58,19 +67,21 @@ export const Challenge = () => {
     window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
   }
   return (
-    <Container onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
-      {
-        result.map((v, i) => (
-          <ResultRow key={`ResultRow${i}`} result={v} answer={answer}></ResultRow>
-        ))
-      }
-      {
-        new Array(5 - result.length).fill(" ").map((v, i) =>
-          (!i && result.indexOf(answer) === -1) ?
-            <EditableRow key={`EditableRow${0}`} digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={digitNum}></BlankRow>
-        )
-      }
+    <Game onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
+      <Board>
+        {
+          result.map((v, i) => (
+            <ResultRow key={`ResultRow${i}`} result={v} answer={answer}></ResultRow>
+          ))
+        }
+        {
+          new Array(5 - result.length).fill(" ").map((v, i) =>
+            (!i && result.indexOf(answer) === -1) ?
+              <EditableRow key={`EditableRow${0}`} digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={digitNum}></BlankRow>
+          )
+        }
+      </Board>
       <NumberKeyboard></NumberKeyboard>
-    </Container>
+    </Game>
   );
 }
