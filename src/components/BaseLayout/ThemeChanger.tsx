@@ -1,6 +1,8 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { isDarkAtom } from "../../atom/themeAtoms";
+import { ReactComponent as LightIcon } from '../../svg/light.svg';
+import { ReactComponent as DarkIcon } from '../../svg/dark.svg';
 
 const ChangeThemeBtn = styled.button`
   width: 50px;
@@ -9,8 +11,10 @@ const ChangeThemeBtn = styled.button`
   background-color: transparent;
   color : ${props => props.theme.boxTextColor};
   border: none;
-  img {
-    width:80%;
+  svg {
+    width: 35px;
+    height: 35px;
+    fill: ${props => props.theme.accentColor};
   }
 `;
 
@@ -23,8 +27,8 @@ export const ThemeChanger = () => {
       onClick={toggleDarkAtom}
     >
       {isDark ?
-        <img src="/img/night.png" alt="Set Light Mode"></img>
-        : <img src="/img/sun.png" alt="Set Dark Mode"></img>
+        <DarkIcon></DarkIcon>
+        : <LightIcon></LightIcon>
       }
     </ChangeThemeBtn>
   )

@@ -1,7 +1,7 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { modalAtom } from "../../atom/modalAtom";
-import { isDarkAtom } from "../../atom/themeAtoms";
+import { ReactComponent as SettingIcon } from "../../svg/gear.svg";
 
 const SettingBtn = styled.button`
   width: 50px;
@@ -9,21 +9,19 @@ const SettingBtn = styled.button`
   cursor: pointer;
   background-color: transparent;
   border: none;
-  img {
-    width:80%;
+  svg {
+    width: 35px;
+    height: 35px;
+    fill: ${props => props.theme.accentColor};
   }
 `;
 
 export const SettingButton = () => {
-  const isDark = useRecoilValue(isDarkAtom);
   const setModal = useSetRecoilState(modalAtom);
   return (
     <SettingBtn onClick={() => { setModal("setting") }}
     >
-      {isDark ?
-        <img src="/img/gear_night.png" alt="Setting"></img>
-        : <img src="/img/gear_sun.png" alt="Setting"></img>
-      }
+      <SettingIcon></SettingIcon>
     </SettingBtn>
   )
 }
