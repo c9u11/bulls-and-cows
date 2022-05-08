@@ -41,6 +41,8 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
 
   const setOne = (idx: number, status: DigitStatus, value?: NumString | undefined) => {
     setDigitInfo((prev) => {
+      if ((status === "typedEnd" || status === "errorEnd") && prev[idx].status === "init")
+        return prev;
       return {
         ...prev, [idx]: {
           status,
@@ -50,8 +52,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     })
     if (status === "typed" || status === "error")
       setTimeout(() => {
-        if (digitInfo[idx].value !== "")
-          setOne(idx, `${status}End`);
+        setOne(idx, `${status}End`);
       }, 200)
   }
   const setAll = (status: DigitStatus, value?: NumString) => {
