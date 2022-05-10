@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components"
+import { modalAtom } from "../../atom/modalAtom";
 import { BlankRow } from "../../components/Content/BlankRow";
 import { EditableRow } from "../../components/Content/EditableRow";
 import { NumberKeyboard } from "../../components/Content/NumberKeyboard";
 import { ResultRow } from "../../components/Content/ResultRow";
-import { randomNum } from "../../util";
+import { dateToYYYYMMDD, randomNum } from "../../util";
 
 interface ChallengeStateInterface {
   "boardState": string[]
@@ -49,6 +51,7 @@ const ChallengeStateString = window.localStorage.getItem("ChallengeState");
 const ChallengeStateJson: ChallengeStateInterface = (ChallengeStateString && JSON.parse(ChallengeStateString)) || DEFAULT_STATE;
 
 export const Challenge = () => {
+  const setModal = useSetRecoilState(modalAtom);
   const [result, setResult] = useState<string[]>([]);
   useEffect(() => {
     setResult(() => {
@@ -56,14 +59,16 @@ export const Challenge = () => {
       if (new Date(ChallengeStateJson.lastPlayedTs).getDate() !== new Date().getDate()) boardState = [];
       return boardState;
     });
-  }, [])
+  }, []);
   if (result.length && result.length !== ChallengeStateJson.boardState.length) {
     const currentTime = new Date().getTime();
     ChallengeStateJson.boardState = result;
     ChallengeStateJson.lastPlayedTs = currentTime;
-    if (result.indexOf(answer) !== -1)
-      ChallengeStateJson.lastCompletedTs = currentTime;
+    if (result.indexOf(answer) !== -1) ChallengeStateJson.lastCompletedTs = currentTime;
     window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
+  }
+  if (dateToYYYYMMDD(new Date(ChallengeStateJson.lastCompletedTs)) === dateToYYYYMMDD(new Date())) {
+    setTimeout(() => { setModal("test"); }, 2000)
   }
   return (
     <Game onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
