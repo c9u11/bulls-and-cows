@@ -36,7 +36,6 @@ const digitNum = 4;
 const isUnique = true;
 
 const answer = randomNum(digitNum, isUnique);
-// const answer = "0517";
 
 const DEFAULT_STATE: ChallengeStateInterface = {
   "boardState": [],
