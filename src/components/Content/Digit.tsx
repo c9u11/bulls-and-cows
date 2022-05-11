@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
 
-export interface DigitInterface {
+interface DigitInterface {
   value: NumString;
   status: DigitStatus;
   index: number;
@@ -11,7 +11,6 @@ export interface DigitInterface {
 }
 
 type DigitVariantsInterface = { [key in DigitStatus]: {} }
-
 
 const DigitEl = styled(motion.input)`
   display: flex;

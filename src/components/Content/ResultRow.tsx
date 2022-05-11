@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NumString } from "../../types/type";
 import { Digit } from "./Digit";
 
-export interface ResultRowInterface {
+interface ResultRowInterface {
   result: string;
   answer: string;
 }
