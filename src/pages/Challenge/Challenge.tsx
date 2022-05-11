@@ -60,16 +60,18 @@ export const Challenge = () => {
       return boardState;
     });
   }, []);
-  if (result.length && result.length !== ChallengeStateJson.boardState.length) {
-    const currentTime = new Date().getTime();
-    ChallengeStateJson.boardState = result;
-    ChallengeStateJson.lastPlayedTs = currentTime;
-    if (result.indexOf(answer) !== -1) ChallengeStateJson.lastCompletedTs = currentTime;
-    window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
-  }
-  if (dateToYYYYMMDD(new Date(ChallengeStateJson.lastCompletedTs)) === dateToYYYYMMDD(new Date())) {
-    setTimeout(() => { setModal("test"); }, 2000)
-  }
+  useEffect(() => {
+    if (result.length && result.length !== ChallengeStateJson.boardState.length) {
+      const currentTime = new Date().getTime();
+      ChallengeStateJson.boardState = result;
+      ChallengeStateJson.lastPlayedTs = currentTime;
+      if (result.indexOf(answer) !== -1) ChallengeStateJson.lastCompletedTs = currentTime;
+      window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
+    }
+    if (dateToYYYYMMDD(new Date(ChallengeStateJson.lastCompletedTs)) === dateToYYYYMMDD(new Date())) {
+      setTimeout(() => { setModal("test"); }, 2000)
+    }
+  }, [result])
   return (
     <Game onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
       <Board>
