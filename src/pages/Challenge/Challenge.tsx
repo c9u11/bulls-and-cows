@@ -71,7 +71,7 @@ export const Challenge = () => {
     if (dateToYYYYMMDD(new Date(ChallengeStateJson.lastCompletedTs)) === dateToYYYYMMDD(new Date())) {
       setTimeout(() => { setModal("test"); }, 2000)
     }
-  }, [result])
+  }, [result, setModal])
   return (
     <Game onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
       <Board>
