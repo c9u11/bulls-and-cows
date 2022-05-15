@@ -10,5 +10,16 @@ declare module "styled-components" {
     accentColor: string;
     boxBgColor: string;
     boxTextColor: string;
+    initBgColor: string;
+    initBorderColor: string;
+    focusBgColor: string;
+    typedBorderColor: string;
+    errorBorderColor: string;
+    emptyBgColor: string;
+    emptyBorderColor: string;
+    halfBgColor: string;
+    halfBorderColor: string;
+    fullBgColor: string;
+    fullBorderColor: string;
   }
 }
