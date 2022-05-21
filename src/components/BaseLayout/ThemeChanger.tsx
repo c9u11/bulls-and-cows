@@ -9,7 +9,7 @@ const ChangeThemeBtn = styled.button`
   height: 50px;
   cursor: pointer;
   background-color: transparent;
-  color : ${props => props.theme.boxTextColor};
+  color : ${props => props.theme.textColor};
   border: none;
   svg {
     width: 35px;

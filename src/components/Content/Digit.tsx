@@ -28,7 +28,7 @@ const DigitEl = styled(motion.input)`
   text-align: center;
   font-size: var(--digit-font-size);
   font-weight: bolder;
-  color: ${props => props.theme.boxTextColor};
+  color: ${props => props.theme.textColor};
   scale: 1;
   rotateY: 0;
   rotateZ: 0;

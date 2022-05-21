@@ -26,7 +26,7 @@ const Body = styled.div`
   min-height: calc(100vh - var(--header-height));
   margin: 0% auto;
   background-color: ${props => props.theme.bgColor};
-  color: ${props => props.theme.primaryTextColor};
+  color: ${props => props.theme.textColor};
 `
 
 export const BaseLayout = () => {

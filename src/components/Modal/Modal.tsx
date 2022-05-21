@@ -18,7 +18,7 @@ const Background = styled.div`
 const Container = styled.div`
   position: relative;
   background-color: ${props => props.theme.boxBgColor};
-  color: ${props => props.theme.boxTextColor};
+  color: ${props => props.theme.textColor};
   border: ${props => props.theme.borderColor} 1px solid;
   border-radius: 10px;
   padding: 32px 16px;
@@ -35,7 +35,7 @@ const CloseButton = styled.button`
   height: 24px;
   border: none;
   background-color: #00000000;
-  color: ${props => props.theme.boxTextColor};
+  color: ${props => props.theme.textColor};
   font-weight: bolder;
   line-height: 24px;
   font-size: 24px;

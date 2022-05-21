@@ -19,8 +19,8 @@ const Key = styled("button")`
   cursor: pointer;
   border: none;
   font-size: 20px;
-  fill: ${props => props.theme.boxTextColor};
-  color: ${props => props.theme.boxTextColor};
+  fill: ${props => props.theme.textColor};
+  color: ${props => props.theme.textColor};
   background-color: ${props => props.theme.boxBgColor};
   border-radius: 10px;
   padding: 0px;

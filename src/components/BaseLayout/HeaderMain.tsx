@@ -9,7 +9,7 @@ flex:1;
 align-items: center;
 justify-content: center;
 flex-direction: column;
-color : ${props => props.theme.boxTextColor};
+color : ${props => props.theme.textColor};
 `
 const Title = styled.h1`
 font-weight: bold;
@@ -39,7 +39,7 @@ bottom: 0px;
 transform: translate(0, 100%);
 display: flex;
 width: 100%;
-background-color: ${props => props.theme.boxBgColor + "bb"};
+background-color: ${props => props.theme.boxBgColor + "ee"};
 flex-direction: column;
 align-items: center;
 overflow: hidden;
