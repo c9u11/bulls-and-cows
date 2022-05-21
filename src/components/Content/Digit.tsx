@@ -1,9 +1,6 @@
-import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
-import { useContext } from 'react'
-import { ThemeContext } from 'styled-components'
 
 interface DigitInterface {
   value: NumString;
@@ -12,9 +9,7 @@ interface DigitInterface {
   result?: boolean;
 }
 
-type DigitVariantsInterface = { [key in DigitStatus]: {} }
-
-const DigitEl = styled(motion.input)`
+const DigitEl = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +28,27 @@ const DigitEl = styled(motion.input)`
   rotateY: 0;
   rotateZ: 0;
   caret-color: transparent;
+  &:active{
+    background-color: ${props => props.theme.focusBgColor};
+  }
+  &.typed{
+    border-color: ${props => props.theme.typedBorderColor};
+  }
+  &.error{
+    border-color: ${props => props.theme.errorBorderColor};
+  }
+  &.empty{
+    background-color: ${props => props.theme.emptyBgColor};
+    border-color: ${props => props.theme.emptyBorderColor};
+  }
+  &.half{
+    background-color: ${props => props.theme.halfBgColor};
+    border-color: ${props => props.theme.halfBorderColor};
+  }
+  &.full{
+    background-color: ${props => props.theme.fullBgColor};
+    border-color: ${props => props.theme.fullBorderColor};
+  }
 `;
 
 const IdleFunc = () => { }
@@ -48,87 +64,44 @@ const onFocus = () => {
   }
 }
 
-export const Digit = React.memo(({ value, status, index, result }: DigitInterface) => {
-  const themeContext = useContext(ThemeContext);
-  const digitVariants: DigitVariantsInterface = {
-    init: {
-    },
-    focus: {
-      backgroundColor: [themeContext.initBgColor, themeContext.focusBgColor],
-      transition: {
-        repeat: Infinity,
-        repeatType: "reverse" as "reverse",
-        repeatDelay: 0,
-        duration: 1,
-      }
-    },
-    typed: {
-      scale: [1, 1.13, 1],
-      borderColor: themeContext.typedBorderColor,
-      transition: {
-        type: "spring",
-        duration: 0.2,
-        bounce: 0.5
-      }
-    },
-    typedEnd: {
-      scale: 1,
-      borderColor: themeContext.typedBorderColor,
-    },
-    error: {
-      rotateZ: [0, -3, 0, 3, 0, -3, 0, 3, 0],
-      borderColor: themeContext.errorBorderColor,
-      transition: {
-        duration: 0.2,
-        bounce: 1
-      }
-    },
-    errorEnd: {
-      rotateZ: 0,
-      borderColor: themeContext.errorBorderColor
-    },
-    empty: {
-      backgroundColor: [themeContext.initBgColor, themeContext.emptyBgColor],
-      borderColor: [themeContext.typedBorderColor, themeContext.emptyBorderColor],
-      rotateY: [0, 90, 0],
-      transition: {
-        duration: 1,
-        times: [0.4, 0.5],
-        rotateY: { times: [0, 0.5, 1] }
-      }
-    },
-    half: {
-      backgroundColor: [themeContext.initBgColor, themeContext.halfBgColor],
-      borderColor: [themeContext.typedBorderColor, themeContext.halfBorderColor],
-      rotateY: [0, 90, 0],
-      transition: {
-        duration: 1,
-        times: [0.4, 0.5],
-        rotateY: { times: [0, 0.5, 1] }
-      }
-    },
-    full: {
-      backgroundColor: [themeContext.initBgColor, themeContext.fullBgColor],
-      borderColor: [themeContext.typedBorderColor, themeContext.fullBorderColor],
-      rotateY: [0, 90, 0],
-      transition: {
-        duration: 1,
-        times: [0.4, 0.5],
-        rotateY: { times: [0, 0.5, 1] }
-      }
+const animationList = {
+  bounce: {
+    scale: [1, 1.13, 1],
+    transition: {
+      type: "spring",
+      duration: 0.2,
+      bounce: 0.5
     }
-  };
+  },
+  vibrate: {
+    rotateZ: [0, -3, 0, 3, 0, -3, 0, 3, 0],
+    transition: {
+      duration: 0.2,
+      bounce: 1
+    }
+  },
+  flipY: {
+    rotateY: [0, 90, 0],
+    transition: {
+      duration: 1,
+      rotateY: { times: [0, 0.5, 1] }
+    }
+  }
+}
+
+export const Digit = React.memo(({ value, status, index, result }: DigitInterface) => {
   return (
     <DigitEl
+      key={Math.random().toFixed(2)}
+      className={status}
       value={value}
       disabled={!!result}
       onChange={IdleFunc}
       maxLength={1}
-      variants={result ? { result: digitVariants[status] } : digitVariants}
-      animate={result ? undefined : status}
-      whileFocus={!!result ? undefined : "focus"}
       onFocus={onFocus}
       data-index={index}
+      autoComplete="off"
+      autoFocus
     ></DigitEl>
   )
 })

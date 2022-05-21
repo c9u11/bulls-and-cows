@@ -1,11 +1,10 @@
-import { motion } from "framer-motion";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
 import { Digit } from "./Digit";
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   position: relative;
   width: 100%;
   flex-wrap: wrap;
@@ -30,6 +29,7 @@ interface digitInfoInterface {
 }
 
 export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowInterface) => {
+  const editableRowRef = useRef<HTMLInputElement>(null);
   const digitInfoObject: digitInfoInterface = {};
   for (let i = 0; i < digitNum; i++) {
     digitInfoObject[i] = {
@@ -41,8 +41,6 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
 
   const setOne = (idx: number, status: DigitStatus, value?: NumString | undefined) => {
     setDigitInfo((prev) => {
-      if ((status === "typedEnd" || status === "errorEnd") && prev[idx].status === "init")
-        return prev;
       return {
         ...prev, [idx]: {
           status,
@@ -50,10 +48,6 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
         }
       };
     })
-    if (status === "typed" || status === "error")
-      setTimeout(() => {
-        setOne(idx, `${status}End`);
-      }, 200)
   }
   const setAll = (status: DigitStatus, value?: NumString) => {
     setDigitInfo((prev) => {
@@ -71,21 +65,19 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     const preValue = (e.target as HTMLInputElement)?.value;
     switch (e.key) {
       case "ArrowLeft":
-        ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
+        setTimeout(() => (editableRowRef.current?.children[idx - 1] as HTMLElement)?.focus(), 0)
         break;
       case "ArrowRight":
-        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
+        setTimeout(() => (editableRowRef.current?.children[idx + 1] as HTMLElement)?.focus(), 0)
         break;
       case "Backspace":
-        if (idx !== 0 && !preValue) {
-          ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
-          idx--;
-        }
+        if (idx !== 0 && !preValue) idx--;
         setOne(idx, "init", "");
+        setTimeout(() => (editableRowRef.current?.children[idx] as HTMLElement)?.focus(), 0)
         break;
       case "Escape":
-        ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement)?.focus();
         setAll("init", "");
+        setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
         break;
       case "Enter":
         const errorPoint = [];
@@ -98,14 +90,12 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
           })
         }
         else {
-          ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement)?.focus();
           setAll("init", "");
+          setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
           let result = ""
-          for (let i = 0; i < digitNum; i++) {
-            result += digitInfo[i].value;
-          }
-          if (setResult !== undefined)
-            setResult((prev) => [...prev, result])
+          for (let i = 0; i < digitNum; i++) { result += digitInfo[i].value; }
+          if (setResult !== undefined) setResult((prev) => [...prev, result]);
+          setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
         }
         break;
       case String(Number(e.key)):
@@ -122,18 +112,18 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
             break;
           }
         }
-        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
         setOne(idx, "typed", e.key as NumString);
+        setTimeout(() => (editableRowRef.current?.children[idx + 1] as HTMLElement)?.focus(), 0)
         break;
       default:
         break;
     }
   }
   useEffect(() => {
-    (document.getElementById("editableRow")?.firstElementChild as HTMLElement)?.focus();
+    setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
   }, [])
   return (
-    <Wrapper id="editableRow" onKeyDown={onKeyDown}>
+    <Wrapper id="editableRow" onKeyDown={onKeyDown} ref={editableRowRef}>
       {
         Object.keys(digitInfo).map((_, idx) => (
           <Digit

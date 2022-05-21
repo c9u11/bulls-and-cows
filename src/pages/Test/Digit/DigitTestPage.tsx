@@ -1,10 +1,9 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../../types/type";
 import { Digit } from "../../../components/Content/Digit";
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   position: relative;
   height: 100vh;
   width: 100vw;
