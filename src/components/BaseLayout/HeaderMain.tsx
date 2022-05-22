@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import styled from "styled-components"
@@ -14,7 +15,7 @@ const Title = styled.h1`
 font-weight: bold;
 font-size: 36px;
 `
-const SubTitle = styled.button`
+const SubTitle = styled(motion.button)`
 color: inherit;
 background-color: unset;
 border: none;
@@ -24,7 +25,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 `
-const MenuIcon = styled.span`
+const MenuIcon = styled(motion.span)`
 background-color: unset;
 border: none;
 font-size: inherit;
@@ -32,7 +33,7 @@ cursor: pointer;
 padding: 0px 5px;
 `
 
-const MenuBar = styled.div`
+const MenuBar = styled(motion.div)`
 position: absolute;
 bottom: 0px;
 transform: translate(0, 100%);
@@ -74,23 +75,25 @@ export const HeaderMain = () => {
   return (
     <Center>
       <Title>Bulls and Cows</Title>
-      <SubTitle onClick={toggleShowing}>
-        <MenuIcon>&equiv;</MenuIcon>
+      <SubTitle whileHover="hover" onClick={toggleShowing}>
+        <MenuIcon variants={{ hover: { scale: 1.3 } }}>&equiv;</MenuIcon>
         {` ${subTitle}`}
       </SubTitle>
-      {
-        showing ?
-          <MenuBar
-            {...menuBarVariants}
-          >
-            {
-              menuList.map(v => {
-                return subTitle !== v ? <Link key={v} to={`/${v}`} onClick={toggleShowing}>{v}</Link> : null
-              })
-            }
-          </MenuBar>
-          : null
-      }
+      <AnimatePresence>
+        {
+          showing ?
+            <MenuBar
+              {...menuBarVariants}
+            >
+              {
+                menuList.map(v => {
+                  return subTitle !== v ? <Link key={v} to={`/${v}`} onClick={toggleShowing}>{v}</Link> : null
+                })
+              }
+            </MenuBar>
+            : null
+        }
+      </AnimatePresence>
     </Center>
   )
 }
