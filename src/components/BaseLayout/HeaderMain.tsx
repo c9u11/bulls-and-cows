@@ -9,11 +9,11 @@ flex:1;
 align-items: center;
 justify-content: center;
 flex-direction: column;
-color : ${props => props.theme.textColor};
 `
 const Title = styled.h1`
 font-weight: bold;
 font-size: 36px;
+color : ${props => props.theme.textColor};
 `
 const SubTitle = styled(motion.button)`
 color: inherit;
@@ -24,6 +24,7 @@ font-size: 18px;
 display: flex;
 align-items: center;
 justify-content: center;
+color : ${props => props.theme.textColor};
 `
 const MenuIcon = styled(motion.span)`
 background-color: unset;
@@ -31,6 +32,7 @@ border: none;
 font-size: inherit;
 cursor: pointer;
 padding: 0px 5px;
+color : ${props => props.theme.textColor};
 `
 
 const MenuBar = styled(motion.div)`
