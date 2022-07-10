@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
 
 interface DigitInterface {
@@ -9,7 +9,65 @@ interface DigitInterface {
   result?: boolean;
 }
 
-const DigitEl = styled.input`
+const keyframesList = {
+  bounce: keyframes`
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.13);
+    }
+    100% {
+      transform: scale(1);
+    }
+  `,
+  focus: (initBgColor: string, focusBgColor: string) => keyframes`
+    from {
+      background-color: ${focusBgColor};
+    }
+    to {
+      background-color: ${initBgColor};
+    }
+  `,
+  vibrate: keyframes`
+    0% {
+      transform: rotateZ(0deg);
+    }
+    33% {
+      transform: rotateZ(-3deg);
+    }
+    66% {
+      transform: rotateZ(0deg);
+    }
+    100% {
+      transform: rotateZ(3deg);
+    }
+  `,
+  flipY: (typedBorderColor: string, typedBgColor: string, flipedBorderColor: string, flipedBgColor: string) => keyframes`
+    0% {
+      background-color: ${typedBgColor};
+      border-color: ${typedBorderColor};
+      transform: rotateY(0deg);
+    }
+    50% {
+      background-color: ${typedBgColor};
+      border-color: ${typedBorderColor};
+      transform: rotateY(90deg);
+    }
+    51% {
+      background-color: ${flipedBorderColor};
+      border-color: ${flipedBgColor};
+      transform: rotateY(90deg);
+    }
+    100% {
+      background-color: ${flipedBorderColor};
+      border-color: ${flipedBgColor};
+      transform: rotateY(0deg);
+    }
+  `
+}
+
+const DigitEl = styled.input<{ delay: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,30 +82,36 @@ const DigitEl = styled.input`
   font-size: var(--digit-font-size);
   font-weight: bolder;
   color: ${props => props.theme.textColor};
-  scale: 1;
-  rotateY: 0;
-  rotateZ: 0;
   caret-color: transparent;
-  &:active{
-    background-color: ${props => props.theme.focusBgColor};
-  }
   &.typed{
     border-color: ${props => props.theme.typedBorderColor};
+    animation: ${keyframesList.bounce} 0.2s 0s 1 linear alternate;
   }
   &.error{
     border-color: ${props => props.theme.errorBorderColor};
+    animation: ${keyframesList.vibrate} 0.2s 0s 2 linear alternate;
+  }
+  &:focus{
+    animation: ${props => keyframesList.focus(props.theme.initBgColor, props.theme.focusBgColor)} 0.5s 0s infinite linear alternate;
+  }
+  &.typed:focus{
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${keyframesList.bounce} 0.2s 0s 1 linear alternate, ${props => keyframesList.focus(props.theme.initBgColor, props.theme.focusBgColor)} 0.5s 0s infinite linear alternate;
+  }
+  &.error:focus{
+    animation: ${keyframesList.vibrate} 0.2s 0s 2 linear alternate, ${props => keyframesList.focus(props.theme.initBgColor, props.theme.focusBgColor)} 0.5s 0s infinite linear alternate;
   }
   &.empty{
-    background-color: ${props => props.theme.emptyBgColor};
-    border-color: ${props => props.theme.emptyBorderColor};
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${props => keyframesList.flipY(props.theme.typedBorderColor, props.theme.initBgColor, props.theme.emptyBorderColor, props.theme.emptyBgColor)} 0.7s ${props => `${props.delay}s`} 1 linear alternate forwards;
   }
   &.half{
-    background-color: ${props => props.theme.halfBgColor};
-    border-color: ${props => props.theme.halfBorderColor};
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${props => keyframesList.flipY(props.theme.typedBorderColor, props.theme.initBgColor, props.theme.halfBorderColor, props.theme.halfBgColor)} 0.7s ${props => `${props.delay}s`} 1 linear alternate forwards;
   }
   &.full{
-    background-color: ${props => props.theme.fullBgColor};
-    border-color: ${props => props.theme.fullBorderColor};
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${props => keyframesList.flipY(props.theme.typedBorderColor, props.theme.initBgColor, props.theme.fullBorderColor, props.theme.fullBgColor)} 0.7s ${props => `${props.delay}s`} 1 linear alternate forwards;
   }
 `;
 
@@ -64,31 +128,6 @@ const onFocus = () => {
   }
 }
 
-const animationList = {
-  bounce: {
-    scale: [1, 1.13, 1],
-    transition: {
-      type: "spring",
-      duration: 0.2,
-      bounce: 0.5
-    }
-  },
-  vibrate: {
-    rotateZ: [0, -3, 0, 3, 0, -3, 0, 3, 0],
-    transition: {
-      duration: 0.2,
-      bounce: 1
-    }
-  },
-  flipY: {
-    rotateY: [0, 90, 0],
-    transition: {
-      duration: 1,
-      rotateY: { times: [0, 0.5, 1] }
-    }
-  }
-}
-
 export const Digit = React.memo(({ value, status, index, result }: DigitInterface) => {
   return (
     <DigitEl
@@ -100,6 +139,7 @@ export const Digit = React.memo(({ value, status, index, result }: DigitInterfac
       maxLength={1}
       onFocus={onFocus}
       data-index={index}
+      delay={index * 0.6}
       autoComplete="off"
       autoFocus
     ></DigitEl>
