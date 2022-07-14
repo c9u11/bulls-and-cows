@@ -120,7 +120,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     }
   }
   useEffect(() => {
-    setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
+    setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0);
   }, [])
   return (
     <Wrapper id="editableRow" onKeyDown={onKeyDown} ref={editableRowRef}>
