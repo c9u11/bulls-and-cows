@@ -15,7 +15,11 @@ interface ChallengeStateInterface {
   "lastCompletedTs": number
   "hardMode": boolean
 }
-
+const Container = styled.div`
+  display:flex;
+  width: 100%;
+  flex-grow: 1;
+`
 const Game = styled.div`
   display:flex;
   max-width: var(--game-max-width);
@@ -49,7 +53,10 @@ const DEFAULT_STATE: ChallengeStateInterface = {
 
 const ChallengeStateString = window.localStorage.getItem("ChallengeState");
 const ChallengeStateJson: ChallengeStateInterface = (ChallengeStateString && JSON.parse(ChallengeStateString)) || DEFAULT_STATE;
-
+const focusFunc = (e: React.MouseEvent) => {
+  if ((e.target as HTMLElement).tagName !== "INPUT" || (e.target as HTMLInputElement).disabled)
+    document.getElementById("focusEl")?.focus()
+};
 export const Challenge = () => {
   const setModal = useSetRecoilState(modalAtom);
   const [result, setResult] = useState<string[]>([]);
@@ -73,21 +80,23 @@ export const Challenge = () => {
     }
   }, [result, setModal])
   return (
-    <Game onClick={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") document.getElementById("focusEl")?.focus() }}>
-      <Board>
-        {
-          result.map((v, i) => (
-            <ResultRow key={`ResultRow${i}`} result={v} answer={answer}></ResultRow>
-          ))
-        }
-        {
-          new Array(5 - result.length).fill(" ").map((v, i) =>
-            (!i && result.indexOf(answer) === -1) ?
-              <EditableRow key={`EditableRow${0}`} digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={digitNum}></BlankRow>
-          )
-        }
-      </Board>
-      <NumberKeyboard></NumberKeyboard>
-    </Game>
+    <Container onClick={focusFunc}>
+      <Game>
+        <Board>
+          {
+            result.map((v, i) => (
+              <ResultRow key={`ResultRow${i}`} result={v} answer={answer}></ResultRow>
+            ))
+          }
+          {
+            new Array(5 - result.length).fill(" ").map((v, i) =>
+              (!i && result.indexOf(answer) === -1) ?
+                <EditableRow key={`EditableRow${0}`} digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={digitNum}></BlankRow>
+            )
+          }
+        </Board>
+        <NumberKeyboard></NumberKeyboard>
+      </Game>
+    </Container>
   );
 }
