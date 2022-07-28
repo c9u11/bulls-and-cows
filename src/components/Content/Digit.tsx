@@ -23,10 +23,10 @@ const keyframesList = {
   `,
   focus: (initBgColor: string, focusBgColor: string) => keyframes`
     from {
-      background-color: ${focusBgColor};
+      background-color: ${initBgColor};
     }
     to {
-      background-color: ${initBgColor};
+      background-color: ${focusBgColor};
     }
   `,
   vibrate: keyframes`
