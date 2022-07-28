@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { DigitStatus, NumString } from "../../types/type";
@@ -28,8 +28,9 @@ interface digitInfoInterface {
   }
 }
 
+export let focusChange: Function;
+export let action: Function;
 export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowInterface) => {
-  const editableRowRef = useRef<HTMLInputElement>(null);
   const digitInfoObject: digitInfoInterface = {};
   for (let i = 0; i < digitNum; i++) {
     digitInfoObject[i] = {
@@ -60,24 +61,29 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
       return { ...prev };
     })
   }
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    let idx = Number((e.target as HTMLInputElement).getAttribute("data-index"));
-    const preValue = (e.target as HTMLInputElement)?.value;
-    switch (e.key) {
+  focusChange = (idx: number) => {
+    setTimeout(() => (document.getElementById("editableRow")?.children[idx] as HTMLElement)?.focus(), 0)
+  }
+  action = (cmd: String) => {
+    let idx = Number(document.getElementById("focusEl")?.getAttribute("data-index"));
+    const preValue = (document.getElementById("focusEl") as HTMLInputElement)?.value;
+    switch (cmd) {
       case "ArrowLeft":
-        setTimeout(() => (editableRowRef.current?.children[idx - 1] as HTMLElement)?.focus(), 0)
+        focusChange(idx - 1);
         break;
       case "ArrowRight":
-        setTimeout(() => (editableRowRef.current?.children[idx + 1] as HTMLElement)?.focus(), 0)
+        focusChange(idx + 1);
         break;
       case "Backspace":
-        if (idx !== 0 && !preValue) idx--;
+        if (idx !== 0 && !preValue) {
+          idx--;
+        }
         setOne(idx, "init", "");
-        setTimeout(() => (editableRowRef.current?.children[idx] as HTMLElement)?.focus(), 0)
+        focusChange(idx);
         break;
       case "Escape":
         setAll("init", "");
-        setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
+        focusChange(0);
         break;
       case "Enter":
         const errorPoint = [];
@@ -88,21 +94,22 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
           errorPoint.forEach(v => {
             setOne(v, "error")
           })
+          focusChange(errorPoint[0]);
         }
         else {
-          setAll("init", "");
-          setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
+          focusChange(0);
           let result = ""
           for (let i = 0; i < digitNum; i++) { result += digitInfo[i].value; }
           if (setResult !== undefined) setResult((prev) => [...prev, result]);
-          setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0)
+          setAll("init", "");
+          focusChange(0);
         }
         break;
-      case String(Number(e.key)):
+      case String(Number(cmd)):
         if (unique) {
           let isUnique = true;
           for (let i = 0; i < digitNum; i++) {
-            if (idx !== i && digitInfo[i].value === e.key) {
+            if (idx !== i && digitInfo[i].value === cmd) {
               isUnique = false;
               break;
             }
@@ -112,28 +119,31 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
             break;
           }
         }
-        setOne(idx, "typed", e.key as NumString);
-        setTimeout(() => (editableRowRef.current?.children[idx + 1] as HTMLElement)?.focus(), 0)
+        setOne(idx, "typed", cmd as NumString);
+        focusChange(idx + 1);
         break;
       default:
         break;
     }
   }
   useEffect(() => {
-    setTimeout(() => (editableRowRef.current?.children[0] as HTMLElement)?.focus(), 0);
+    focusChange(0);
   }, [])
+  console.log(digitInfo);
   return (
-    <Wrapper id="editableRow" onKeyDown={onKeyDown} ref={editableRowRef}>
-      {
-        Object.keys(digitInfo).map((_, idx) => (
-          <Digit
-            key={idx}
-            index={idx}
-            status={digitInfo[idx].status}
-            value={digitInfo[idx].value}
-          />
-        ))
-      }
-    </Wrapper>
+    <>
+      <Wrapper id="editableRow" onKeyDown={(e) => { action(e.key) }}>
+        {
+          Object.keys(digitInfo).map((_, idx) => (
+            <Digit
+              key={idx}
+              index={idx}
+              status={digitInfo[idx].status}
+              value={digitInfo[idx].value}
+            />
+          ))
+        }
+      </Wrapper>
+    </>
   );
 }
