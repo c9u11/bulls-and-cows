@@ -6,16 +6,10 @@ import { BlankRow } from "components/Content/BlankRow";
 import { EditableRow } from "components/Content/EditableRow";
 import { NumberKeyboard } from "components/Content/NumberKeyboard";
 import { ResultRow } from "components/Content/ResultRow";
-import { randomNum } from "util/Math";
-import { dateToYYYYMMDD } from "util/Date";
+import { getChallengeState, setChallengeState } from 'util/ChallengeState';
+import { CHALLENGE_DIGIT, CHALLENGE_UNIQUE } from "constants/ChallengeState";
+import { GAME_STATE } from "constants/Game";
 
-interface ChallengeStateInterface {
-  "boardState": string[]
-  "gameStatus": string
-  "lastPlayedTs": number
-  "lastCompletedTs": number
-  "hardMode": boolean
-}
 const Container = styled.div`
   display:flex;
   width: 100%;
@@ -39,44 +33,21 @@ const Board = styled.div`
   gap: var(--default-gap);
 `
 
-const digitNum = 4;
-const isUnique = true;
-
-const answer = randomNum(digitNum, isUnique);
-
-const DEFAULT_STATE: ChallengeStateInterface = {
-  "boardState": [],
-  "gameStatus": "IN_PROGRESS",
-  "lastPlayedTs": 1650124265706,
-  "lastCompletedTs": 1650124265706,
-  "hardMode": false
-}
-
-const ChallengeStateString = window.localStorage.getItem("ChallengeState");
-const ChallengeStateJson: ChallengeStateInterface = (ChallengeStateString && JSON.parse(ChallengeStateString)) || DEFAULT_STATE;
 const focusFunc = (e: React.MouseEvent) => {
   if ((e.target as HTMLElement).tagName !== "INPUT" || (e.target as HTMLInputElement).disabled)
     document.getElementById("focusEl")?.focus()
 };
+let challengeState = getChallengeState();
+const answer = challengeState.answer;
 export const Challenge = () => {
   const setModal = useSetRecoilState(modalAtom);
-  const [result, setResult] = useState<string[]>([]);
+  const [result, setResult] = useState<string[]>(challengeState.boardState);
   useEffect(() => {
-    setResult(() => {
-      let boardState: string[] = ChallengeStateJson.boardState;
-      if (new Date(ChallengeStateJson.lastPlayedTs).getDate() !== new Date().getDate()) boardState = [];
-      return boardState;
+    challengeState = setChallengeState({
+      ...challengeState,
+      boardState: result
     });
-  }, []);
-  useEffect(() => {
-    if (result.length && result.length !== ChallengeStateJson.boardState.length) {
-      const currentTime = new Date().getTime();
-      ChallengeStateJson.boardState = result;
-      ChallengeStateJson.lastPlayedTs = currentTime;
-      if (result.indexOf(answer) !== -1) ChallengeStateJson.lastCompletedTs = currentTime;
-      window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
-    }
-    if (dateToYYYYMMDD(new Date(ChallengeStateJson.lastCompletedTs)) === dateToYYYYMMDD(new Date())) {
+    if (challengeState.gameStatus === GAME_STATE.SUCCESS) {
       setTimeout(() => { setModal("CompleteBoard"); }, 600 * 4 + 300)
     }
   }, [result, setModal])
@@ -92,7 +63,7 @@ export const Challenge = () => {
           {
             new Array(5 - result.length).fill(" ").map((v, i) =>
               (!i && result.indexOf(answer) === -1) ?
-                <EditableRow key={`EditableRow${0}`} digitNum={digitNum} unique={isUnique} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={digitNum}></BlankRow>
+                <EditableRow key={`EditableRow${0}`} digitNum={CHALLENGE_DIGIT} unique={CHALLENGE_UNIQUE} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={CHALLENGE_DIGIT}></BlankRow>
             )
           }
         </Board>

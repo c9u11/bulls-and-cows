@@ -1,0 +1,5 @@
+export const GAME_STATE = {
+  PROGRESS: "PROGRESS",
+  SUCCESS: "SUCCESS",
+  FAIL: "FAIL",
+};
