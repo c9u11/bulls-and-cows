@@ -6,7 +6,8 @@ import { BlankRow } from "components/Content/BlankRow";
 import { EditableRow } from "components/Content/EditableRow";
 import { NumberKeyboard } from "components/Content/NumberKeyboard";
 import { ResultRow } from "components/Content/ResultRow";
-import { randomNum, dateToYYYYMMDD } from "util";
+import { randomNum } from "util/Math";
+import { dateToYYYYMMDD } from "util/Date";
 
 interface ChallengeStateInterface {
   "boardState": string[]

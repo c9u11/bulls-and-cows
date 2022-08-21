@@ -1,4 +1,6 @@
-var seedrandom = require('seedrandom');
+import { dateToYYYYMMDD } from "./Date";
+
+var seedrandom = require("seedrandom");
 export const randomNum = (digitNum: number, unique: boolean) => {
   let nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   let seed = seedrandom(dateToYYYYMMDD(new Date()));
@@ -9,8 +11,4 @@ export const randomNum = (digitNum: number, unique: boolean) => {
     if (unique) nums.splice(order, 1);
   }
   return output;
-}
-
-export const dateToYYYYMMDD = (date: Date) => {
-  return `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
-}
+};

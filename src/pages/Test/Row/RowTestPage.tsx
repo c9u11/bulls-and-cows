@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { EditableRow } from 'components/Content/EditableRow';
 import { ResultRow } from 'components/Content/ResultRow';
-import { randomNum } from 'util';
+import { randomNum } from 'util/Math';
 
 const Container = styled.div`
   display: flex;
