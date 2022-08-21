@@ -48,7 +48,7 @@ export const Challenge = () => {
       boardState: result
     });
     if (challengeState.gameStatus === GAME_STATE.SUCCESS) {
-      setTimeout(() => { setModal("CompleteBoard"); }, 600 * 4 + 300)
+      setTimeout(() => { setModal("ResultBoard"); }, 600 * 4 + 300)
     }
   }, [result, setModal])
   return (

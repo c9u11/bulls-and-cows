@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { modalAtom } from 'atom/modalAtom';
 import { useRecoilState } from "recoil";
-import { Test } from "./Test";
+import { ResultBoard } from "./ResultBoard";
 import { Setting } from "./Setting";
 
 const Background = styled.div`
@@ -45,7 +45,7 @@ const CloseButton = styled.button`
 
 const returnModal = (modal: string) => {
   switch (modal) {
-    case "test": return <Test />
+    case "ResultBoard": return <ResultBoard />
     case "setting": return <Setting />
     default: return null
   }
