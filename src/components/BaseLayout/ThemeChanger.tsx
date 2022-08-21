@@ -1,8 +1,8 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { isDarkAtom } from "../../atom/themeAtoms";
-import { ReactComponent as LightIcon } from '../../svg/light.svg';
-import { ReactComponent as DarkIcon } from '../../svg/dark.svg';
+import { isDarkAtom } from "atom/themeAtoms";
+import { ReactComponent as LightIcon } from 'svg/light.svg';
+import { ReactComponent as DarkIcon } from 'svg/dark.svg';
 
 const ChangeThemeBtn = styled.button`
   width: 50px;

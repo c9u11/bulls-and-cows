@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import styled from "styled-components"
 
-import { action } from "../../components/Content/EditableRow";
+import { action } from "components/Content/EditableRow";
 const Keyboard = styled.div`
   display: grid;
   width: 100%;

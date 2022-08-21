@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NumString } from "../../types/type";
+import { NumString } from "types/type";
 import { Digit } from "./Digit";
 
 interface ResultRowInterface {

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { modalAtom } from '../../atom/modalAtom';
+import { modalAtom } from 'atom/modalAtom';
 import { useRecoilState } from "recoil";
 import { Test } from "./Test";
 import { Setting } from "./Setting";

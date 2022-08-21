@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { DigitStatus, NumString } from "../../../types/type";
-import { Digit } from "../../../components/Content/Digit";
+import { DigitStatus, NumString } from "types/type";
+import { Digit } from "components/Content/Digit";
 
 const Wrapper = styled.div`
   position: relative;

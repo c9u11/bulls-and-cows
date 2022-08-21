@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components"
-import { modalAtom } from "../../atom/modalAtom";
-import { BlankRow } from "../../components/Content/BlankRow";
-import { EditableRow } from "../../components/Content/EditableRow";
-import { NumberKeyboard } from "../../components/Content/NumberKeyboard";
-import { ResultRow } from "../../components/Content/ResultRow";
-import { dateToYYYYMMDD, randomNum } from "../../util";
+import { modalAtom } from "atom/modalAtom";
+import { BlankRow } from "components/Content/BlankRow";
+import { EditableRow } from "components/Content/EditableRow";
+import { NumberKeyboard } from "components/Content/NumberKeyboard";
+import { ResultRow } from "components/Content/ResultRow";
+import { randomNum, dateToYYYYMMDD } from "util";
 
 interface ChallengeStateInterface {
   "boardState": string[]
@@ -76,7 +76,7 @@ export const Challenge = () => {
       window.localStorage.setItem("ChallengeState", JSON.stringify(ChallengeStateJson));
     }
     if (dateToYYYYMMDD(new Date(ChallengeStateJson.lastCompletedTs)) === dateToYYYYMMDD(new Date())) {
-      setTimeout(() => { setModal("test"); }, 2000)
+      setTimeout(() => { setModal("CompleteBoard"); }, 600 * 4 + 300)
     }
   }, [result, setModal])
   return (
