@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { modalAtom } from "../../atom/modalAtom";
-import { ReactComponent as SettingIcon } from "../../svg/gear.svg";
+import { modalAtom } from "atom/modalAtom";
+import { ReactComponent as SettingIcon } from "svg/gear.svg";
 
 const SettingBtn = styled.button`
   width: 50px;
@@ -12,7 +12,9 @@ const SettingBtn = styled.button`
   svg {
     width: 35px;
     height: 35px;
-    fill: ${props => props.theme.accentColor};
+    path {
+      fill: ${props => props.theme.accentColor};
+    }
   }
 `;
 

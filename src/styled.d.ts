@@ -2,14 +2,12 @@ import "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    primaryTextColor: string;
-    secondaryTextColor: string;
+    textColor: string;
     bgColor: string;
     borderColor: string;
     errorColor: string;
     accentColor: string;
     boxBgColor: string;
-    boxTextColor: string;
     initBgColor: string;
     initBorderColor: string;
     focusBgColor: string;

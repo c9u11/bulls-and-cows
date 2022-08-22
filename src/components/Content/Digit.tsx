@@ -1,9 +1,6 @@
-import { motion } from "framer-motion";
 import React from "react";
-import styled from "styled-components";
-import { DigitStatus, NumString } from "../../types/type";
-import { useContext } from 'react'
-import { ThemeContext } from 'styled-components'
+import styled, { keyframes } from "styled-components";
+import { DigitStatus, NumString } from "types/type";
 
 interface DigitInterface {
   value: NumString;
@@ -12,9 +9,65 @@ interface DigitInterface {
   result?: boolean;
 }
 
-type DigitVariantsInterface = { [key in DigitStatus]: {} }
+const keyframesList = {
+  bounce: keyframes`
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.13);
+    }
+    100% {
+      transform: scale(1);
+    }
+  `,
+  focus: (initBgColor: string, focusBgColor: string) => keyframes`
+    from {
+      background-color: ${initBgColor};
+    }
+    to {
+      background-color: ${focusBgColor};
+    }
+  `,
+  vibrate: keyframes`
+    0% {
+      transform: rotateZ(0deg);
+    }
+    33% {
+      transform: rotateZ(-3deg);
+    }
+    66% {
+      transform: rotateZ(0deg);
+    }
+    100% {
+      transform: rotateZ(3deg);
+    }
+  `,
+  flipY: (typedBorderColor: string, typedBgColor: string, flipedBorderColor: string, flipedBgColor: string) => keyframes`
+    0% {
+      background-color: ${typedBgColor};
+      border-color: ${typedBorderColor};
+      transform: rotateY(0deg);
+    }
+    50% {
+      background-color: ${typedBgColor};
+      border-color: ${typedBorderColor};
+      transform: rotateY(90deg);
+    }
+    51% {
+      background-color: ${flipedBorderColor};
+      border-color: ${flipedBgColor};
+      transform: rotateY(90deg);
+    }
+    100% {
+      background-color: ${flipedBorderColor};
+      border-color: ${flipedBgColor};
+      transform: rotateY(0deg);
+    }
+  `
+}
 
-const DigitEl = styled(motion.input)`
+const DigitEl = styled.input<{ delay: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,11 +81,38 @@ const DigitEl = styled(motion.input)`
   text-align: center;
   font-size: var(--digit-font-size);
   font-weight: bolder;
-  color: ${props => props.theme.boxTextColor};
-  scale: 1;
-  rotateY: 0;
-  rotateZ: 0;
+  color: ${props => props.theme.textColor};
   caret-color: transparent;
+  &.typed{
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${keyframesList.bounce} 0.2s 0s 1 linear alternate;
+  }
+  &.error{
+    border-color: ${props => props.theme.errorBorderColor};
+    animation: ${keyframesList.vibrate} 0.2s 0s 2 linear alternate;
+  }
+  &:focus{
+    animation: ${props => keyframesList.focus(props.theme.initBgColor, props.theme.focusBgColor)} 0.5s 0s infinite linear alternate;
+  }
+  &.typed:focus{
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${keyframesList.bounce} 0.2s 0s 1 linear alternate, ${props => keyframesList.focus(props.theme.initBgColor, props.theme.focusBgColor)} 0.5s 0s infinite linear alternate;
+  }
+  &.error:focus{
+    animation: ${keyframesList.vibrate} 0.2s 0s 2 linear alternate, ${props => keyframesList.focus(props.theme.initBgColor, props.theme.focusBgColor)} 0.5s 0s infinite linear alternate;
+  }
+  &.empty{
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${props => keyframesList.flipY(props.theme.typedBorderColor, props.theme.initBgColor, props.theme.emptyBorderColor, props.theme.emptyBgColor)} 0.7s ${props => `${props.delay}s`} 1 linear alternate forwards;
+  }
+  &.half{
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${props => keyframesList.flipY(props.theme.typedBorderColor, props.theme.initBgColor, props.theme.halfBorderColor, props.theme.halfBgColor)} 0.7s ${props => `${props.delay}s`} 1 linear alternate forwards;
+  }
+  &.full{
+    border-color: ${props => props.theme.typedBorderColor};
+    animation: ${props => keyframesList.flipY(props.theme.typedBorderColor, props.theme.initBgColor, props.theme.fullBorderColor, props.theme.fullBgColor)} 0.7s ${props => `${props.delay}s`} 1 linear alternate forwards;
+  }
 `;
 
 const IdleFunc = () => { }
@@ -49,87 +129,19 @@ const onFocus = () => {
 }
 
 export const Digit = React.memo(({ value, status, index, result }: DigitInterface) => {
-  const themeContext = useContext(ThemeContext);
-  const digitVariants: DigitVariantsInterface = {
-    init: {
-    },
-    focus: {
-      backgroundColor: [themeContext.initBgColor, themeContext.focusBgColor],
-      transition: {
-        repeat: Infinity,
-        repeatType: "reverse" as "reverse",
-        repeatDelay: 0,
-        duration: 1,
-      }
-    },
-    typed: {
-      scale: [1, 1.13, 1],
-      borderColor: themeContext.typedBorderColor,
-      transition: {
-        type: "spring",
-        duration: 0.2,
-        bounce: 0.5
-      }
-    },
-    typedEnd: {
-      scale: 1,
-      borderColor: themeContext.typedBorderColor,
-    },
-    error: {
-      rotateZ: [0, -3, 0, 3, 0, -3, 0, 3, 0],
-      borderColor: themeContext.errorBorderColor,
-      transition: {
-        duration: 0.2,
-        bounce: 1
-      }
-    },
-    errorEnd: {
-      rotateZ: 0,
-      borderColor: themeContext.errorBorderColor
-    },
-    empty: {
-      backgroundColor: [themeContext.initBgColor, themeContext.emptyBgColor],
-      borderColor: [themeContext.typedBorderColor, themeContext.emptyBorderColor],
-      rotateY: [0, 90, 0],
-      transition: {
-        duration: 1,
-        times: [0.4, 0.5],
-        rotateY: { times: [0, 0.5, 1] }
-      }
-    },
-    half: {
-      backgroundColor: [themeContext.initBgColor, themeContext.halfBgColor],
-      borderColor: [themeContext.typedBorderColor, themeContext.halfBorderColor],
-      rotateY: [0, 90, 0],
-      transition: {
-        duration: 1,
-        times: [0.4, 0.5],
-        rotateY: { times: [0, 0.5, 1] }
-      }
-    },
-    full: {
-      backgroundColor: [themeContext.initBgColor, themeContext.fullBgColor],
-      borderColor: [themeContext.typedBorderColor, themeContext.fullBorderColor],
-      rotateY: [0, 90, 0],
-      transition: {
-        duration: 1,
-        times: [0.4, 0.5],
-        rotateY: { times: [0, 0.5, 1] }
-      }
-    }
-  };
   return (
     <DigitEl
+      key={Math.random().toFixed(2)}
+      className={status}
       value={value}
       disabled={!!result}
       onChange={IdleFunc}
       maxLength={1}
-      variants={result ? { result: digitVariants[status] } : digitVariants}
-      animate={result ? undefined : status}
-      whileFocus={!!result ? undefined : "focus"}
       onFocus={onFocus}
       data-index={index}
+      delay={index * 0.6}
       autoComplete="off"
+      autoFocus
     ></DigitEl>
   )
 })

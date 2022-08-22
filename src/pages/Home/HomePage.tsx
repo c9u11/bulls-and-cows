@@ -1,6 +1,6 @@
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components"
-import { modalAtom } from '../../atom/modalAtom';
+import { modalAtom } from 'atom/modalAtom';
 
 const Container = styled.div`
 `

@@ -1,11 +1,10 @@
-import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { DigitStatus, NumString } from "../../types/type";
+import { DigitStatus, NumString } from "types/type";
 import { Digit } from "./Digit";
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   position: relative;
   width: 100%;
   flex-wrap: wrap;
@@ -29,6 +28,8 @@ interface digitInfoInterface {
   }
 }
 
+export let focusChange: Function;
+export let action: Function;
 export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowInterface) => {
   const digitInfoObject: digitInfoInterface = {};
   for (let i = 0; i < digitNum; i++) {
@@ -41,8 +42,6 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
 
   const setOne = (idx: number, status: DigitStatus, value?: NumString | undefined) => {
     setDigitInfo((prev) => {
-      if ((status === "typedEnd" || status === "errorEnd") && prev[idx].status === "init")
-        return prev;
       return {
         ...prev, [idx]: {
           status,
@@ -50,10 +49,6 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
         }
       };
     })
-    if (status === "typed" || status === "error")
-      setTimeout(() => {
-        setOne(idx, `${status}End`);
-      }, 200)
   }
   const setAll = (status: DigitStatus, value?: NumString) => {
     setDigitInfo((prev) => {
@@ -66,26 +61,29 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
       return { ...prev };
     })
   }
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    let idx = Number((e.target as HTMLInputElement).getAttribute("data-index"));
-    const preValue = (e.target as HTMLInputElement)?.value;
-    switch (e.key) {
+  focusChange = (idx: number) => {
+    setTimeout(() => (document.getElementById("editableRow")?.children[idx] as HTMLElement)?.focus(), 0)
+  }
+  action = (cmd: String) => {
+    let idx = Number(document.getElementById("focusEl")?.getAttribute("data-index"));
+    const preValue = (document.getElementById("focusEl") as HTMLInputElement)?.value;
+    switch (cmd) {
       case "ArrowLeft":
-        ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
+        focusChange(idx - 1);
         break;
       case "ArrowRight":
-        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
+        focusChange(idx + 1);
         break;
       case "Backspace":
         if (idx !== 0 && !preValue) {
-          ((e.target as HTMLInputElement)?.previousElementSibling as HTMLElement)?.focus();
           idx--;
         }
         setOne(idx, "init", "");
+        focusChange(idx);
         break;
       case "Escape":
-        ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement)?.focus();
         setAll("init", "");
+        focusChange(0);
         break;
       case "Enter":
         const errorPoint = [];
@@ -96,23 +94,22 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
           errorPoint.forEach(v => {
             setOne(v, "error")
           })
+          focusChange(errorPoint[0]);
         }
         else {
-          ((e.target as HTMLInputElement)?.parentElement?.firstElementChild as HTMLElement)?.focus();
-          setAll("init", "");
+          focusChange(0);
           let result = ""
-          for (let i = 0; i < digitNum; i++) {
-            result += digitInfo[i].value;
-          }
-          if (setResult !== undefined)
-            setResult((prev) => [...prev, result])
+          for (let i = 0; i < digitNum; i++) { result += digitInfo[i].value; }
+          if (setResult !== undefined) setResult((prev) => [...prev, result]);
+          setAll("init", "");
+          focusChange(0);
         }
         break;
-      case String(Number(e.key)):
+      case String(Number(cmd)):
         if (unique) {
           let isUnique = true;
           for (let i = 0; i < digitNum; i++) {
-            if (idx !== i && digitInfo[i].value === e.key) {
+            if (idx !== i && digitInfo[i].value === cmd) {
               isUnique = false;
               break;
             }
@@ -122,28 +119,31 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
             break;
           }
         }
-        ((e.target as HTMLInputElement)?.nextElementSibling as HTMLElement)?.focus();
-        setOne(idx, "typed", e.key as NumString);
+        setOne(idx, "typed", cmd as NumString);
+        focusChange(idx + 1);
         break;
       default:
         break;
     }
   }
   useEffect(() => {
-    (document.getElementById("editableRow")?.firstElementChild as HTMLElement)?.focus();
+    focusChange(0);
   }, [])
+  console.log(digitInfo);
   return (
-    <Wrapper id="editableRow" onKeyDown={onKeyDown}>
-      {
-        Object.keys(digitInfo).map((_, idx) => (
-          <Digit
-            key={idx}
-            index={idx}
-            status={digitInfo[idx].status}
-            value={digitInfo[idx].value}
-          />
-        ))
-      }
-    </Wrapper>
+    <>
+      <Wrapper id="editableRow" onKeyDown={(e) => { action(e.key) }}>
+        {
+          Object.keys(digitInfo).map((_, idx) => (
+            <Digit
+              key={idx}
+              index={idx}
+              status={digitInfo[idx].status}
+              value={digitInfo[idx].value}
+            />
+          ))
+        }
+      </Wrapper>
+    </>
   );
 }

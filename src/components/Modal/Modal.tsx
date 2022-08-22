@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { modalAtom } from '../../atom/modalAtom';
+import { modalAtom } from 'atom/modalAtom';
 import { useRecoilState } from "recoil";
-import { Test } from "./Test";
+import { ResultBoard } from "./ResultBoard";
 import { Setting } from "./Setting";
 
 const Background = styled.div`
@@ -18,7 +18,7 @@ const Background = styled.div`
 const Container = styled.div`
   position: relative;
   background-color: ${props => props.theme.boxBgColor};
-  color: ${props => props.theme.boxTextColor};
+  color: ${props => props.theme.textColor};
   border: ${props => props.theme.borderColor} 1px solid;
   border-radius: 10px;
   padding: 32px 16px;
@@ -35,7 +35,7 @@ const CloseButton = styled.button`
   height: 24px;
   border: none;
   background-color: #00000000;
-  color: ${props => props.theme.boxTextColor};
+  color: ${props => props.theme.textColor};
   font-weight: bolder;
   line-height: 24px;
   font-size: 24px;
@@ -45,7 +45,7 @@ const CloseButton = styled.button`
 
 const returnModal = (modal: string) => {
   switch (modal) {
-    case "test": return <Test />
+    case "ResultBoard": return <ResultBoard />
     case "setting": return <Setting />
     default: return null
   }
