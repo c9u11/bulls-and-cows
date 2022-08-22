@@ -129,6 +129,7 @@ export const Digit = React.memo(({ value, status, index, result }: DigitInterfac
       whileFocus={!!result ? undefined : "focus"}
       onFocus={onFocus}
       data-index={index}
+      autoComplete="off"
     ></DigitEl>
   )
 })
