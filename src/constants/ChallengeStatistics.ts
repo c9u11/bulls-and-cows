@@ -6,12 +6,6 @@ export const DEFAULT_STATISTICS: ChallengeStatisticsInterface = {
   currentStreak: 0,
   maxStreak: 0,
   guesses: {
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 0,
-    "5": 0,
-    "6": 0,
     fail: 0,
   },
   winPercentage: 0,

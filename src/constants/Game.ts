@@ -3,3 +3,5 @@ export const GAME_STATE = {
   SUCCESS: "SUCCESS",
   FAIL: "FAIL",
 };
+
+export const CHALLENGE_LIFE = 5;
