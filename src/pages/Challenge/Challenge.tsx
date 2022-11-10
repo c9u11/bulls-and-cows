@@ -8,7 +8,7 @@ import { NumberKeyboard } from "components/Content/NumberKeyboard";
 import { ResultRow } from "components/Content/ResultRow";
 import { getChallengeState, setChallengeState } from 'util/ChallengeState';
 import { CHALLENGE_DIGIT, CHALLENGE_UNIQUE } from "constants/ChallengeState";
-import { GAME_STATE } from "constants/Game";
+import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 
 const Container = styled.div`
   display:flex;
@@ -47,7 +47,8 @@ export const Challenge = () => {
       ...challengeState,
       boardState: result
     });
-    if (challengeState.gameStatus === GAME_STATE.SUCCESS) {
+
+    if (challengeState.gameStatus === GAME_STATE.SUCCESS || challengeState.gameStatus === GAME_STATE.FAIL) {
       setTimeout(() => { setModal("ResultBoard"); }, 600 * 4 + 300)
     }
   }, [result, setModal])
@@ -61,7 +62,7 @@ export const Challenge = () => {
             ))
           }
           {
-            new Array(5 - result.length).fill(" ").map((v, i) =>
+            new Array(CHALLENGE_LIFE - result.length).fill(" ").map((v, i) =>
               (!i && result.indexOf(answer) === -1) ?
                 <EditableRow key={`EditableRow${0}`} digitNum={CHALLENGE_DIGIT} unique={CHALLENGE_UNIQUE} setResult={setResult}></EditableRow> : <BlankRow key={`BlankRow${i}`} digitNum={CHALLENGE_DIGIT}></BlankRow>
             )

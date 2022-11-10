@@ -6,8 +6,8 @@ import {
 import { ChallengeStateInterface } from "interfaces/ChallengeState";
 import { randomNum } from "./Math";
 import { CHALLENGE_UNIQUE } from "../constants/ChallengeState";
-import { dateToYYYYMMDD } from "./Date";
-import { GAME_STATE } from "constants/Game";
+import { dateToYYYYMMDD, isSameDate } from "./Date";
+import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 
 function initChallengeState(prev = DEFAULT_STATE) {
   const challengeState: ChallengeStateInterface = {
@@ -39,11 +39,23 @@ export function getChallengeState() {
 }
 
 export function setChallengeState(challengeState: ChallengeStateInterface) {
-  const currentTime = new Date().getTime();
+  const currentDate = new Date();
+  const lastCompletedDate = new Date(challengeState.lastCompletedTs);
+  if (isSameDate(currentDate, lastCompletedDate)) return challengeState;
+  const currentTime = currentDate.getTime();
+  const isSuccessed =
+    challengeState.answer === challengeState.boardState.at(-1);
+  const isFailed =
+    !isSuccessed && challengeState.boardState.length <= CHALLENGE_LIFE;
+
   challengeState.lastPlayedTs = currentTime;
-  if (challengeState.answer === challengeState.boardState.at(-1)) {
+
+  if (isSuccessed) {
     challengeState.lastCompletedTs = currentTime;
     challengeState.gameStatus = GAME_STATE.SUCCESS;
+  } else if (isFailed) {
+    challengeState.lastCompletedTs = currentTime;
+    challengeState.gameStatus = GAME_STATE.FAIL;
   }
   window.localStorage.setItem(
     LOCAL_STORAGE_KEY,
