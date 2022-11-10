@@ -46,7 +46,7 @@ export function setChallengeState(challengeState: ChallengeStateInterface) {
   const isSuccessed =
     challengeState.answer === challengeState.boardState.at(-1);
   const isFailed =
-    !isSuccessed && challengeState.boardState.length <= CHALLENGE_LIFE;
+    !isSuccessed && challengeState.boardState.length >= CHALLENGE_LIFE;
 
   challengeState.lastPlayedTs = currentTime;
 
