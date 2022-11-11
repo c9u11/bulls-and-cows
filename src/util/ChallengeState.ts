@@ -6,7 +6,7 @@ import {
 import { ChallengeStateInterface } from "interfaces/ChallengeState";
 import { randomNum } from "./Math";
 import { CHALLENGE_UNIQUE } from "../constants/ChallengeState";
-import { dateToYYYYMMDD, isSameDate } from "./Date";
+import { isSameDate } from "./Date";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 
 function initChallengeState(prev = DEFAULT_STATE) {
@@ -17,7 +17,7 @@ function initChallengeState(prev = DEFAULT_STATE) {
     lastStartedTs: new Date().getTime(),
     answer: randomNum(CHALLENGE_DIGIT, CHALLENGE_UNIQUE),
   };
-  return challengeState;
+  return setChallengeState(challengeState);
 }
 
 export function getChallengeState() {
@@ -27,15 +27,12 @@ export function getChallengeState() {
     challengeState =
       (challengeStateString && JSON.parse(challengeStateString)) ||
       DEFAULT_STATE;
-    if (
-      dateToYYYYMMDD(new Date(challengeState.lastPlayedTs)) !==
-      dateToYYYYMMDD(new Date())
-    )
+    if (!isSameDate(new Date(challengeState.lastPlayedTs), new Date()))
       challengeState = initChallengeState(challengeState);
   } catch {
     challengeState = initChallengeState();
   }
-  return setChallengeState(challengeState);
+  return challengeState;
 }
 
 export function setChallengeState(challengeState: ChallengeStateInterface) {

@@ -5,7 +5,7 @@ import {
 import { ChallengeStatisticsInterface } from "interfaces/ChallengeStatistics";
 
 function initChallengeStistics() {
-  return DEFAULT_STATISTICS;
+  return setChallengeStatistics(DEFAULT_STATISTICS);
 }
 
 export function getChallengeStistics() {
@@ -19,7 +19,7 @@ export function getChallengeStistics() {
   } catch {
     challengeStatistics = initChallengeStistics();
   }
-  return setChallengeStatistics(challengeStatistics);
+  return challengeStatistics;
 }
 
 export function setChallengeStatistics(
