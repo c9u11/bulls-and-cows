@@ -9,6 +9,7 @@ import { ResultRow } from "components/Content/ResultRow";
 import { getChallengeState, setChallengeState } from 'util/ChallengeState';
 import { CHALLENGE_DIGIT, CHALLENGE_UNIQUE } from "constants/ChallengeState";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
+import { getChallengeStatistics } from "util/ChallengeStatistics";
 
 const Container = styled.div`
   display:flex;
@@ -40,6 +41,7 @@ const focusFunc = (e: React.MouseEvent) => {
 let challengeState = getChallengeState();
 const answer = challengeState.answer;
 export const Challenge = () => {
+  getChallengeStatistics();
   const setModal = useSetRecoilState(modalAtom);
   const [result, setResult] = useState<string[]>(challengeState.boardState);
   useEffect(() => {

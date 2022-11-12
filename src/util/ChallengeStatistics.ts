@@ -8,7 +8,7 @@ function initChallengeStistics() {
   return setChallengeStatistics(DEFAULT_STATISTICS);
 }
 
-export function getChallengeStistics() {
+export function getChallengeStatistics() {
   let challengeStatistics: ChallengeStatisticsInterface;
   try {
     const challengeStatisticsString =
