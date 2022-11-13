@@ -8,6 +8,10 @@ import { randomNum } from "./Math";
 import { CHALLENGE_UNIQUE } from "../constants/ChallengeState";
 import { isSameDate } from "./Date";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
+import {
+  addStatisticsData,
+  getChallengeStatistics,
+} from "./ChallengeStatistics";
 
 function initChallengeState(prev = DEFAULT_STATE) {
   const challengeState: ChallengeStateInterface = {
@@ -38,22 +42,24 @@ export function getChallengeState() {
 export function setChallengeState(challengeState: ChallengeStateInterface) {
   const currentDate = new Date();
   const lastCompletedDate = new Date(challengeState.lastCompletedTs);
-  if (isSameDate(currentDate, lastCompletedDate)) return challengeState;
   const currentTime = currentDate.getTime();
   const isSuccessed =
     challengeState.answer === challengeState.boardState.at(-1);
   const isFailed =
     !isSuccessed && challengeState.boardState.length >= CHALLENGE_LIFE;
-
+  const isFinished = isSuccessed || isFailed;
   challengeState.lastPlayedTs = currentTime;
-
-  if (isSuccessed) {
-    challengeState.lastCompletedTs = currentTime;
-    challengeState.gameStatus = GAME_STATE.SUCCESS;
-  } else if (isFailed) {
-    challengeState.lastCompletedTs = currentTime;
-    challengeState.gameStatus = GAME_STATE.FAIL;
+  if (isFinished && !isSameDate(currentDate, lastCompletedDate)) {
+    if (isSuccessed) {
+      challengeState.lastCompletedTs = currentTime;
+      challengeState.gameStatus = GAME_STATE.SUCCESS;
+    } else if (isFailed) {
+      challengeState.lastCompletedTs = currentTime;
+      challengeState.gameStatus = GAME_STATE.FAIL;
+    }
+    addStatisticsData(isSuccessed ? challengeState.boardState.length : 0);
   }
+
   window.localStorage.setItem(
     LOCAL_STORAGE_KEY,
     JSON.stringify(challengeState)

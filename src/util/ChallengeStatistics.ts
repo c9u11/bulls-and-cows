@@ -3,6 +3,7 @@ import {
   LOCAL_STORAGE_KEY,
 } from "constants/ChallengeStatistics";
 import { ChallengeStatisticsInterface } from "interfaces/ChallengeStatistics";
+import { CHALLENGE_LIFE } from "constants/Game";
 
 function initChallengeStistics() {
   return setChallengeStatistics(DEFAULT_STATISTICS);
@@ -31,4 +32,31 @@ export function setChallengeStatistics(
     JSON.stringify(challengeStatistics)
   );
   return challengeStatistics;
+}
+
+export function addStatisticsData(result: number) {
+  const data = getChallengeStatistics();
+
+  data.gamesPlayed++;
+  if (result) {
+    data.currentStreak++;
+    data.maxStreak =
+      data.currentStreak > data.maxStreak ? data.currentStreak : data.maxStreak;
+    data.gamesWon++;
+    data.guesses[result] ??= 0;
+    data.guesses[result]++;
+  } else {
+    data.guesses.fail++;
+  }
+
+  data.winPercentage = data.gamesWon / data.gamesPlayed;
+
+  let sum = 0;
+  Object.keys(data.guesses).forEach((v, i) => {
+    if (isNaN(+v)) sum += data.guesses.fail * CHALLENGE_LIFE;
+    sum += data.guesses[+v] * +v;
+  });
+  data.averageGuesses = sum / data.gamesPlayed;
+
+  setChallengeStatistics(data);
 }
