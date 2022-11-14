@@ -1,8 +1,10 @@
 import { Fireworks } from "fireworks-js/dist/react";
 import { getChallengeState } from "util/ChallengeState";
+import { getChallengeStatistics } from "util/ChallengeStatistics";
 
 export const ResultBoard = () => {
   const challengeState = getChallengeState();
+  const challengeStatistics = getChallengeStatistics();
   const options = {
     speed: 3,
   };
@@ -23,6 +25,8 @@ export const ResultBoard = () => {
       <div>
         {JSON.stringify(challengeState)}
         {String(new Date(challengeState.lastCompletedTs))}
+
+        {JSON.stringify(challengeStatistics)}
       </div>
     </>
   );
