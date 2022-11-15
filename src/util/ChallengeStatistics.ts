@@ -54,7 +54,7 @@ export function addStatisticsData(result: number) {
   let sum = 0;
   Object.keys(data.guesses).forEach((v, i) => {
     if (isNaN(+v)) sum += data.guesses.fail * CHALLENGE_LIFE;
-    sum += data.guesses[+v] * +v;
+    else sum += data.guesses[+v] * +v;
   });
   data.averageGuesses = sum / data.gamesPlayed;
 
