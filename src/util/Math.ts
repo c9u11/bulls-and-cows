@@ -12,3 +12,8 @@ export const randomNum = (digitNum: number, unique: boolean) => {
   }
   return output;
 };
+
+export const toFixedNumber = (number: number, digits: number) => {
+  const numberString = number.toFixed(digits);
+  return +numberString;
+};

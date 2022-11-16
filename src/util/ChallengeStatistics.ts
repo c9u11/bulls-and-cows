@@ -4,6 +4,7 @@ import {
 } from "constants/ChallengeStatistics";
 import { ChallengeStatisticsInterface } from "interfaces/ChallengeStatistics";
 import { CHALLENGE_LIFE } from "constants/Game";
+import { toFixedNumber } from "./Math";
 
 function initChallengeStistics() {
   return setChallengeStatistics(DEFAULT_STATISTICS);
@@ -49,14 +50,17 @@ export function addStatisticsData(result: number) {
     data.guesses.fail++;
   }
 
-  data.winPercentage = data.gamesWon / data.gamesPlayed;
+  data.winPercentage = toFixedNumber(
+    (data.gamesWon / data.gamesPlayed) * 100,
+    1
+  );
 
   let sum = 0;
   Object.keys(data.guesses).forEach((v, i) => {
     if (isNaN(+v)) sum += data.guesses.fail * CHALLENGE_LIFE;
     else sum += data.guesses[+v] * +v;
   });
-  data.averageGuesses = sum / data.gamesPlayed;
+  data.averageGuesses = toFixedNumber(sum / data.gamesPlayed, 2);
 
   setChallengeStatistics(data);
 }
