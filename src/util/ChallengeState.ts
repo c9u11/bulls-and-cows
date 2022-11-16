@@ -8,10 +8,7 @@ import { randomNum } from "./Math";
 import { CHALLENGE_UNIQUE } from "../constants/ChallengeState";
 import { isSameDate } from "./Date";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
-import {
-  addStatisticsData,
-  getChallengeStatistics,
-} from "./ChallengeStatistics";
+import { addStatisticsData } from "./ChallengeStatistics";
 
 function initChallengeState(prev = DEFAULT_STATE) {
   const challengeState: ChallengeStateInterface = {
