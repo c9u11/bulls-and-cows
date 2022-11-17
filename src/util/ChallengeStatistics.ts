@@ -48,6 +48,7 @@ export function addStatisticsData(result: number) {
     data.guesses[result]++;
   } else {
     data.guesses.fail++;
+    data.currentStreak = 0;
   }
 
   data.winPercentage = toFixedNumber(
