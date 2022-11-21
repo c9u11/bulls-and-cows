@@ -27,7 +27,6 @@ export function getChallengeStatistics() {
 export function setChallengeStatistics(
   challengeStatistics: ChallengeStatisticsInterface
 ) {
-  const currentTime = new Date().getTime();
   window.localStorage.setItem(
     LOCAL_STORAGE_KEY,
     JSON.stringify(challengeStatistics)

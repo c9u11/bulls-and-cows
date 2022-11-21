@@ -1,6 +1,5 @@
 import { Fireworks } from "fireworks-js/dist/react";
 import styled from "styled-components";
-import { getChallengeState } from "util/ChallengeState";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
 
 interface LabelValueInterface {
@@ -107,9 +106,7 @@ const options = {
 };
 
 export const ResultBoard = () => {
-  const challengeState = getChallengeState();
   const challengeStatistics = getChallengeStatistics();
-
 
   return (
     <>
@@ -134,7 +131,7 @@ export const ResultBoard = () => {
             {
               Object.entries(challengeStatistics.guesses).map(data => {
                 const [key, val] = data;
-                if (isNaN(+key)) return;
+                if (isNaN(+key)) return null;
                 return (
                   <Center className="row">
                     <GraphBar label={key} value={val}></GraphBar>
