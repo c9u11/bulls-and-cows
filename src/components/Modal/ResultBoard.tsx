@@ -7,6 +7,11 @@ interface LabelValueInterface {
   value: string | number;
 }
 
+interface GraphBarInterface extends LabelValueInterface {
+  value: number;
+  max: number;
+}
+
 const Center = styled.div`
   display: flex;
   flex:1;
@@ -28,7 +33,7 @@ const Title = styled.h1`
   color : ${props => props.theme.textColor};
 `
 
-const GraphBar = ({ label, value }: LabelValueInterface) => {
+const GraphBar = ({ label, value, max }: GraphBarInterface) => {
   const Wrapper = styled.div`
     display: flex;
     flex:1;
@@ -43,22 +48,19 @@ const GraphBar = ({ label, value }: LabelValueInterface) => {
     font-weight: bold;
     color: ${props => props.theme.textColor};
     text-align: center;
-    &.value {
-      font-size: 28px;
-    }
-    &.label {
-      font-size: 14px;
-    }
   `
   const Bar = styled.div`
     height: 20px;
-    width: 40px;
     background-color: ${props => props.theme.accentColor};
+    color: ${props => props.theme.boxBgColor};
+    min-width: 10px;
+    padding: 0px 10px;
+    width: ${max === value ? "100%" : `${value / max * 100}%`}
   `
   return (
     <Wrapper>
       <Label>{label}</Label>
-      <Bar></Bar>
+      <Bar>{value}</Bar>
     </Wrapper>
   )
 }
@@ -107,7 +109,8 @@ const options = {
 
 export const ResultBoard = () => {
   const challengeStatistics = getChallengeStatistics();
-
+  let max = 0;
+  Object.values(challengeStatistics.guesses).forEach(v => { max = max > v ? max : v })
   return (
     <>
       <Fireworks options={options} style={style as React.CSSProperties} />
@@ -134,7 +137,7 @@ export const ResultBoard = () => {
                 if (isNaN(+key)) return null;
                 return (
                   <Center className="row">
-                    <GraphBar label={key} value={val}></GraphBar>
+                    <GraphBar label={key} value={val} max={max}></GraphBar>
                   </Center>
                 )
               })
