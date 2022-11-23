@@ -3,6 +3,7 @@ import { ThemeChanger } from "./ThemeChanger"
 import { Outlet } from 'react-router-dom'
 import { HeaderMain } from "./HeaderMain"
 import { SettingButton } from "./SettingButton"
+import { StatisticsButton } from "./StatisticsButton"
 
 const Container = styled.header`
   position: relative;
@@ -29,12 +30,19 @@ const Body = styled.div`
   color: ${props => props.theme.textColor};
 `
 
+const BlankIcon = styled.div`
+  width: 50px;
+  height: 50px;
+`
+
 export const BaseLayout = () => {
   return (
     <>
       <Container>
         <ThemeChanger></ThemeChanger>
+        <BlankIcon></BlankIcon>
         <HeaderMain></HeaderMain>
+        <StatisticsButton></StatisticsButton>
         <SettingButton></SettingButton>
       </Container>
       <Body>
