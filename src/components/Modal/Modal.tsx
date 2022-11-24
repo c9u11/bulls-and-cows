@@ -3,6 +3,7 @@ import { modalAtom } from 'atom/modalAtom';
 import { useRecoilState } from "recoil";
 import { ResultBoard } from "./ResultBoard";
 import { Setting } from "./Setting";
+import { RESULT_BOARD_PATH, SETTING_PATH } from "constants/ModalRoute";
 
 const Background = styled.div`
   display: flex;
@@ -45,8 +46,8 @@ const CloseButton = styled.button`
 
 const returnModal = (modal: string) => {
   switch (modal) {
-    case "ResultBoard": return <ResultBoard />
-    case "setting": return <Setting />
+    case RESULT_BOARD_PATH: return <ResultBoard />
+    case SETTING_PATH: return <Setting />
     default: return null
   }
 }

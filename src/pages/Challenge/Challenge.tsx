@@ -10,6 +10,7 @@ import { getChallengeState, setChallengeState } from 'util/ChallengeState';
 import { CHALLENGE_DIGIT, CHALLENGE_UNIQUE } from "constants/ChallengeState";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
+import { RESULT_BOARD_PATH } from "constants/ModalRoute";
 
 const Container = styled.div`
   display:flex;
@@ -51,7 +52,7 @@ export const Challenge = () => {
     });
 
     if (challengeState.gameStatus === GAME_STATE.SUCCESS || challengeState.gameStatus === GAME_STATE.FAIL) {
-      setTimeout(() => { setModal("ResultBoard"); }, 600 * 4 + 300)
+      setTimeout(() => { setModal(RESULT_BOARD_PATH); }, 600 * 4 + 300)
     }
   }, [result, setModal])
   return (
