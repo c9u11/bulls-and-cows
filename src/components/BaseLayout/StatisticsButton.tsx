@@ -21,7 +21,7 @@ const StatisticsBtn = styled.button`
 export const StatisticsButton = () => {
   const setModal = useSetRecoilState(modalAtom);
   return (
-    <StatisticsBtn onClick={() => { setModal("setting") }}
+    <StatisticsBtn onClick={() => { setModal("ResultBoard") }}
     >
       <GraphIcon></GraphIcon>
     </StatisticsBtn>
