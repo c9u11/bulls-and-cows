@@ -55,7 +55,8 @@ const GraphBar = ({ label, value, max }: GraphBarInterface) => {
     color: ${props => props.theme.boxBgColor};
     min-width: 10px;
     padding: 0px 10px;
-    width: ${max === value ? "100%" : `${value / max * 100}%`}
+    width: ${max === value ? "100%" : `${value / max * 100}%`};
+    text-align: right;
   `
   return (
     <Wrapper>
