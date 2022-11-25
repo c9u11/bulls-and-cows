@@ -2,6 +2,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { modalAtom } from "atom/modalAtom";
 import { ReactComponent as SettingIcon } from "svg/gear.svg";
+import { SETTING_PATH } from "constants/ModalRoute";
 
 const SettingBtn = styled.button`
   width: 50px;
@@ -21,7 +22,7 @@ const SettingBtn = styled.button`
 export const SettingButton = () => {
   const setModal = useSetRecoilState(modalAtom);
   return (
-    <SettingBtn onClick={() => { setModal("setting") }}
+    <SettingBtn onClick={() => { setModal(SETTING_PATH) }}
     >
       <SettingIcon></SettingIcon>
     </SettingBtn>
