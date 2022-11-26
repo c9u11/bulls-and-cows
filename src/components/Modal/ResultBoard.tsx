@@ -1,5 +1,6 @@
 import { Fireworks } from "fireworks-js/dist/react";
 import styled from "styled-components";
+import { getChallengeState } from "util/ChallengeState";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
 
 interface LabelValueInterface {
@@ -31,6 +32,11 @@ const Title = styled.h1`
   font-weight: bolder;
   font-size: 20px;
   color : ${props => props.theme.textColor};
+`
+
+const Accent = styled.span`
+  font-size: 64px;
+  color: ${props => props.theme.accentColor};
 `
 
 const GraphBar = ({ label, value, max }: GraphBarInterface) => {
@@ -109,6 +115,7 @@ const options = {
 };
 
 export const ResultBoard = () => {
+  const challengeState = getChallengeState();
   const challengeStatistics = getChallengeStatistics();
   let max = 0;
   Object.values(challengeStatistics.guesses).forEach(v => { max = max > v ? max : v })
@@ -116,6 +123,12 @@ export const ResultBoard = () => {
     <>
       <Fireworks options={options} style={style as React.CSSProperties} />
       <Center className="col" style={{ gap: "50px" }}>
+        <Center className="col">
+          <Title>
+            Today's Result
+          </Title>
+          <Accent>{challengeState.boardState.length}</Accent>
+        </Center>
         <Center className="col">
           <Title>
             STATISTICS
