@@ -1,4 +1,5 @@
 import { Fireworks } from "fireworks-js/dist/react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getChallengeState } from "util/ChallengeState";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
@@ -117,8 +118,12 @@ const options = {
 export const ResultBoard = () => {
   const challengeState = getChallengeState();
   const challengeStatistics = getChallengeStatistics();
-  let max = 0;
-  Object.values(challengeStatistics.guesses).forEach(v => { max = max > v ? max : v })
+  const [max, setMax] = useState(0);
+  useEffect(() => {
+    let max = 0;
+    Object.values(challengeStatistics.guesses).forEach(v => { max = max > v ? max : v })
+    setMax(max);
+  }, [])
   return (
     <>
       <Fireworks options={options} style={style as React.CSSProperties} />
