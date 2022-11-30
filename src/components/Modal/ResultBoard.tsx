@@ -1,3 +1,4 @@
+import { GAME_STATE } from "constants/Game";
 import { Fireworks } from "fireworks-js/dist/react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -132,7 +133,7 @@ export const ResultBoard = () => {
           <Title>
             Today's Result
           </Title>
-          <Accent>{challengeState.boardState.length}</Accent>
+          <Accent>{challengeState.gameStatus === GAME_STATE.SUCCESS ? challengeState.boardState.length : challengeState.gameStatus}</Accent>
         </Center>
         <Center className="col">
           <Title>
