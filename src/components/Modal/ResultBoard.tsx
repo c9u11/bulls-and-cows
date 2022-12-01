@@ -41,64 +41,64 @@ const Accent = styled.span`
   color: ${props => props.theme.accentColor};
 `
 
+const Wrapper = styled.div`
+  display: flex;
+  flex:1;
+  align-items: center;
+  justify-content: start;
+  flex-direction: row;
+  padding: 0px 80px;
+  gap: 20px;
+`
+const Label = styled.span`
+  width: 10px;
+  font-weight: bold;
+  color: ${props => props.theme.textColor};
+  text-align: center;
+`
+const Bar = styled.div`
+  height: 20px;
+  background-color: ${props => props.theme.accentColor};
+  color: ${props => props.theme.boxBgColor};
+  min-width: 10px;
+  padding: 0px 10px;
+  text-align: right;
+`
+
 const GraphBar = ({ label, value, max }: GraphBarInterface) => {
-  const Wrapper = styled.div`
-    display: flex;
-    flex:1;
-    align-items: center;
-    justify-content: start;
-    flex-direction: row;
-    padding: 0px 80px;
-    gap: 20px;
-  `
-  const Label = styled.span`
-    width: 10px;
-    font-weight: bold;
-    color: ${props => props.theme.textColor};
-    text-align: center;
-  `
-  const Bar = styled.div`
-    height: 20px;
-    background-color: ${props => props.theme.accentColor};
-    color: ${props => props.theme.boxBgColor};
-    min-width: 10px;
-    padding: 0px 10px;
-    width: ${max === value ? "100%" : `${value / max * 100}%`};
-    text-align: right;
-  `
   return (
     <Wrapper>
       <Label>{label}</Label>
-      <Bar>{value}</Bar>
+      <Bar style={{ width: max === value ? "100%" : `${value / max * 100}%` }}>{value}</Bar>
     </Wrapper>
   )
 }
 
+const PanelWrapper = styled.div`
+  display: flex;
+  flex:1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex:1;
+`
+const Span = styled.span`
+  font-weight: bold;
+  color: ${props => props.theme.textColor};
+  text-align: center;
+  &.value {
+    font-size: 28px;
+  }
+  &.label {
+    font-size: 14px;
+  }
+`
 const Panel = ({ label, value }: LabelValueInterface) => {
-  const Wrapper = styled.div`
-    display: flex;
-    flex:1;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    flex:1;
-  `
-  const Span = styled.span`
-    font-weight: bold;
-    color: ${props => props.theme.textColor};
-    text-align: center;
-    &.value {
-      font-size: 28px;
-    }
-    &.label {
-      font-size: 14px;
-    }
-  `
   return (
-    <Wrapper>
+    <PanelWrapper>
       <Span className="value">{value}</Span>
       <Span className="label">{label}</Span>
-    </Wrapper>
+    </PanelWrapper>
   )
 }
 
@@ -156,7 +156,7 @@ export const ResultBoard = () => {
                 const [key, val] = data;
                 if (isNaN(+key)) return null;
                 return (
-                  <Center className="row">
+                  <Center key={key} className="row">
                     <GraphBar label={key} value={val} max={max}></GraphBar>
                   </Center>
                 )
