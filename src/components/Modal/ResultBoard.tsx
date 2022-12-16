@@ -127,7 +127,9 @@ export const ResultBoard = () => {
   }, [])
   return (
     <>
-      <Fireworks options={options} style={style as React.CSSProperties} />
+      {challengeState.gameStatus === GAME_STATE.SUCCESS &&
+        <Fireworks options={options} style={style as React.CSSProperties} />
+      }
       <Center className="col" style={{ gap: "50px" }}>
         <Center className="col">
           <Title>
