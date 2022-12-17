@@ -124,7 +124,7 @@ export const ResultBoard = () => {
     let max = 0;
     Object.values(challengeStatistics.guesses).forEach(v => { max = max > v ? max : v })
     setMax(max);
-  }, [])
+  }, [challengeStatistics.guesses])
   return (
     <>
       {challengeState.gameStatus === GAME_STATE.SUCCESS &&
