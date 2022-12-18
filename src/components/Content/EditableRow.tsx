@@ -129,7 +129,7 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
   useEffect(() => {
     focusChange(0);
   }, [])
-  console.log(digitInfo);
+
   return (
     <>
       <Wrapper id="editableRow" onKeyDown={(e) => { action(e.key) }}>
