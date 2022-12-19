@@ -1,4 +1,4 @@
-import { GAME_STATE } from "constants/Game";
+import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 import { Fireworks } from "fireworks-js/dist/react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -154,12 +154,10 @@ export const ResultBoard = () => {
           </Title>
           <Center className="col" style={{ gap: "20px" }}>
             {
-              Object.entries(challengeStatistics.guesses).map(data => {
-                const [key, val] = data;
-                if (isNaN(+key)) return null;
+              new Array(CHALLENGE_LIFE).fill('').map((_, idx) => {
                 return (
-                  <Center key={key} className="row">
-                    <GraphBar label={key} value={val} max={max}></GraphBar>
+                  <Center key={idx} className="row">
+                    <GraphBar label={`${idx}`} value={challengeStatistics.guesses[idx] || 0} max={max}></GraphBar>
                   </Center>
                 )
               })
