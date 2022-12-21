@@ -157,7 +157,7 @@ export const ResultBoard = () => {
               new Array(CHALLENGE_LIFE).fill('').map((_, idx) => {
                 return (
                   <Center key={idx} className="row">
-                    <GraphBar label={`${idx}`} value={challengeStatistics.guesses[idx] || 0} max={max}></GraphBar>
+                    <GraphBar label={`${idx + 1}`} value={challengeStatistics.guesses[idx] || 0} max={max}></GraphBar>
                   </Center>
                 )
               })
