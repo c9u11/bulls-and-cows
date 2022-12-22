@@ -16,7 +16,7 @@ function initChallengeState(prev = DEFAULT_STATE) {
     boardState: [],
     gameStatus: GAME_STATE.PROGRESS,
     lastStartedTs: new Date().getTime(),
-    answer: randomNum(CHALLENGE_DIGIT, CHALLENGE_UNIQUE),
+    answer: randomNum(CHALLENGE_DIGIT, CHALLENGE_UNIQUE, true),
   };
   return setChallengeState(challengeState);
 }
