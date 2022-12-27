@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { isDarkAtom } from "atom/themeAtoms";
 import { ReactComponent as LightIcon } from 'svg/light.svg';
 import { ReactComponent as DarkIcon } from 'svg/dark.svg';
+import { useTheme } from "hooks/Theme";
 
 const ChangeThemeBtn = styled.button`
   width: 50px;
@@ -20,10 +21,10 @@ const ChangeThemeBtn = styled.button`
   }
 `;
 
+
 export const ThemeChanger = () => {
-  const isDark = useRecoilValue(isDarkAtom);
-  const setDarkAtom = useSetRecoilState(isDarkAtom);
-  const toggleDarkAtom = () => setDarkAtom(prev => !prev);
+  const { isDark, toggleDarkAtom } = useTheme();
+
   return (
     <ChangeThemeBtn
       onClick={toggleDarkAtom}
