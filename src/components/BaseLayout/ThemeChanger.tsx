@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { isDarkAtom } from "atom/themeAtoms";
 import { ReactComponent as LightIcon } from 'svg/light.svg';
 import { ReactComponent as DarkIcon } from 'svg/dark.svg';
-import { useTheme } from "hooks/Theme";
+import { useTheme } from "hooks/useTheme";
 
 const ChangeThemeBtn = styled.button`
   width: 50px;
