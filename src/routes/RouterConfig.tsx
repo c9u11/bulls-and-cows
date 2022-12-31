@@ -5,6 +5,7 @@ import Challenge from "pages/Challenge";
 import HomePage from "pages/Home";
 import DigitTestPage from "pages/Test/Digit";
 import RowTestPage from "pages/Test/Row";
+import Practice from "pages/Practice";
 
 const RouterConfig = () => {
   return (
@@ -17,6 +18,7 @@ const RouterConfig = () => {
       }>
         <Route path="/home" element={<HomePage />} />
         <Route path="/challenge" element={<Challenge />} />
+        <Route path="/practice" element={<Practice />} />
         <Route path="/test/row" element={<RowTestPage />} />
         <Route path="/test/digit" element={<DigitTestPage />} />
       </Route>
