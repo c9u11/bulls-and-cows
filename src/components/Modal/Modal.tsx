@@ -59,7 +59,7 @@ export const Modal = () => {
       {
         modal
           ?
-          <Background>
+          <Background onClick={closeModal}>
             <Container>
               {returnModal(modal)}
               <CloseButton onClick={closeModal}>&#935;</CloseButton>
