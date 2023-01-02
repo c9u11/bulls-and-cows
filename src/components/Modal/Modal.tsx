@@ -59,7 +59,7 @@ export const Modal = () => {
       {
         modal
           ?
-          <Background onClick={closeModal}>
+          <Background onClick={e => { if (e.target === e.currentTarget) closeModal() }}>
             <Container>
               {returnModal(modal)}
               <CloseButton onClick={closeModal}>&#935;</CloseButton>
