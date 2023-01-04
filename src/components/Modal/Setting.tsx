@@ -1,4 +1,6 @@
+import { GAME_STATE } from "constants/Game"
 import styled from "styled-components"
+import { getChallengeState } from "util/ChallengeState"
 
 const Box = styled.div`
 display: flex;
@@ -78,6 +80,9 @@ border-radius: 16px;
 `
 
 export const Setting = () => {
+  const challengeState = getChallengeState();
+  console.log(challengeState);
+
   return (
     <Box className="col">
       <Box className="col">
@@ -91,7 +96,7 @@ export const Setting = () => {
           <Description>not position</Description>
         </Box>
         <Switch>
-          <input type="checkbox" />
+          <input type="checkbox" disabled={challengeState.gameStatus === GAME_STATE.PROGRESS && challengeState.boardState.length !== 0} />
           <Slider></Slider>
         </Switch>
       </Box>
