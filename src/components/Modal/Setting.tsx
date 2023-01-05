@@ -55,28 +55,28 @@ const Switch = styled.label`
 `
 
 const Slider = styled.span`
-position: absolute;
-cursor: pointer;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-color: ${props => props.theme.emptyBorderColor};
--webkit-transition: .4s;
-transition: .4s;
-border-radius: 16px;
-&:before {
   position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 5px;
-  bottom: 5px;
-  background-color: white;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${props => props.theme.emptyBorderColor};
   -webkit-transition: .4s;
   transition: .4s;
-  border-radius: 50%;
-}
+  border-radius: 16px;
+  &:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 5px;
+    bottom: 5px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
 `
 
 export const Setting = () => {
@@ -93,7 +93,7 @@ export const Setting = () => {
       <Box style={{ boxSizing: "border-box", width: "100%", padding: "30px" }}>
         <Box className="col" style={{ alignItems: "start" }}>
           <Title>Hard Mode</Title>
-          <Description>not position</Description>
+          <Description>Bulls and Cows Hints Only, No Color Card Hints</Description>
         </Box>
         <Switch>
           <input type="checkbox" disabled={challengeState.gameStatus === GAME_STATE.PROGRESS && challengeState.boardState.length !== 0} />
