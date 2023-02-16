@@ -1,32 +1,36 @@
-import { useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { modalAtom } from 'atom/modalAtom';
 
 const Container = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 36px;
 `
 
-const ModalBtn = styled.button`
-  cursor: pointer;
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
+const ChallengeBtn = styled.button`
   background-color: ${props => props.theme.accentColor};
-  color: ${props => props.theme.boxBgColor};
-  border-radius: 50%;
   border: none;
-  width: 50px;
-  height: 50px;
-  font-size: 15px;
-  font-weight: bolder;
+  color: ${props => props.theme.boxBgColor};
+  padding: 10px;
+  background-color: ${props => props.theme.accentColor};
+  border-radius: 5px;
+  cursor: pointer;
 `
 
 export const HomePage = () => {
+  const navigate = useNavigate();
 
-  const setModal = useSetRecoilState(modalAtom);
+  const goChallenge = () => {
+    navigate("/challenge");
+  }
+
   return (
     <Container>
-      <span>tes123t</span>
-      <ModalBtn onClick={() => { setModal("test") }}>Help</ModalBtn>
+      Version : Beta
+      <ChallengeBtn onClick={goChallenge}>Go to Challenge</ChallengeBtn>
     </Container>
   )
 }
