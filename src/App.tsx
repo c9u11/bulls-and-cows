@@ -9,7 +9,7 @@ function App() {
   const isDark = useRecoilValue(isDarkAtom);
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <BrowserRouter>
+      <BrowserRouter basename="bulls-and-cows">
         <RouterConfig />
       </BrowserRouter>
     </ThemeProvider>
