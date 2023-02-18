@@ -22,7 +22,7 @@ const RouterConfig = () => {
         <Route path="/test/row" element={<RowTestPage />} />
         <Route path="/test/digit" element={<DigitTestPage />} />
       </Route>
-      <Route path="/*" element={<Navigate replace to="/home" />} />
+      <Route path="*" element={<Navigate replace to="/home" />} />
     </Routes>
   )
 }
