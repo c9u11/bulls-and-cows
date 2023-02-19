@@ -5,14 +5,14 @@ import { ReactComponent as SettingIcon } from "svg/gear.svg";
 import { SETTING_PATH } from "constants/ModalRoute";
 
 const SettingBtn = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 2rem;
+  height: 2rem;
   cursor: pointer;
   background-color: transparent;
   border: none;
   svg {
-    width: 35px;
-    height: 35px;
+    width: 100%;
+    height: 100%;
     path {
       fill: ${props => props.theme.accentColor};
     }

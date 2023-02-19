@@ -13,7 +13,7 @@ flex-direction: column;
 `
 const Title = styled.h1`
 font-weight: bold;
-font-size: 36px;
+font-size: 2rem;
 color : ${props => props.theme.textColor};
 `
 const SubTitle = styled(motion.button)`
@@ -21,7 +21,7 @@ color: inherit;
 background-color: unset;
 border: none;
 cursor: pointer;
-font-size: 18px;
+font-size: 1.2rem;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -32,13 +32,13 @@ background-color: unset;
 border: none;
 font-size: inherit;
 cursor: pointer;
-padding: 0px 5px;
+padding: 0rem .5rem;
 color : ${props => props.theme.textColor};
 `
 
 const MenuBar = styled(motion.div)`
 position: absolute;
-bottom: 0px;
+bottom: 0rem;
 transform: translate(0, 100%);
 display: flex;
 width: 100%;
@@ -47,7 +47,7 @@ flex-direction: column;
 align-items: center;
 overflow: hidden;
 a {
-  margin: 10px 0px;
+  margin: 1rem 0rem;
   color: ${props => props.theme.borderColor};
   text-decoration: none;
 }
@@ -58,13 +58,13 @@ a:hover {
 
 const menuBarVariants = {
   initial: {
-    height: "0px"
+    height: "0rem"
   },
   animate: {
     height: "auto"
   },
   exit: {
-    height: "0px"
+    height: "0rem"
   }
 }
 

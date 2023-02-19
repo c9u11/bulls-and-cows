@@ -17,7 +17,8 @@ const Container = styled.header`
   over-flow: visible;
   height: var(--header-height);
   &>* {
-    margin: 0% var(--default-gap);
+    margin: 0% 1rem;
+    padding: 0rem;
   }
 `
 
@@ -31,8 +32,8 @@ const Body = styled.div`
 `
 
 const BlankIcon = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 2rem;
+  height: 2rem;
 `
 
 export const BaseLayout = () => {
