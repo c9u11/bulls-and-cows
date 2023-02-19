@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import { HeaderMain } from "./HeaderMain"
 import { SettingButton } from "./SettingButton"
 import { StatisticsButton } from "./StatisticsButton"
+import { Resizer } from "./Resizer"
 
 const Container = styled.header`
   position: relative;
@@ -25,7 +26,7 @@ const Container = styled.header`
 const Body = styled.div`
   display: flex;
   position: relative;
-  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100% - var(--header-height));
   margin: 0% auto;
   background-color: ${props => props.theme.bgColor};
   color: ${props => props.theme.textColor};
@@ -39,6 +40,7 @@ const BlankIcon = styled.div`
 export const BaseLayout = () => {
   return (
     <>
+      <Resizer></Resizer>
       <Container>
         <ThemeChanger></ThemeChanger>
         <BlankIcon></BlankIcon>
