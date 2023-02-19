@@ -71,15 +71,16 @@ const DigitEl = styled.input<{ delay: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--digit-width);
-  height: var(--digit-height);
+  width: 3rem;
+  height: fit-content; 
+  padding: 0.7rem; 
   background-color: ${props => props.theme.initBgColor};
-  border-radius: var(--digit-border-radius);
+  border-radius: 0.3rem;
   box-shadow: var(--digit-box-shadow);
   outline: none;
-  border: ${props => props.theme.initBorderColor} var(--digit-border-width) solid;
+  border: ${props => props.theme.initBorderColor} 0.2rem solid;
   text-align: center;
-  font-size: var(--digit-font-size);
+  font-size: 3rem;
   font-weight: bolder;
   color: ${props => props.theme.textColor};
   caret-color: transparent;
@@ -142,6 +143,7 @@ export const Digit = React.memo(({ value, status, index, result }: DigitInterfac
       delay={index * 0.6}
       autoComplete="off"
       autoFocus
+      inputMode="none"
     ></DigitEl>
   )
 })

@@ -4,14 +4,15 @@ import styled from "styled-components"
 import { action } from "components/Content/EditableRow";
 const Keyboard = styled.div`
   display: grid;
-  width: 100%;
+  width: calc(100% - 2rem);
+  margin: 0rem 1rem;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(2, 58px);
-  grid-gap: 5px;
-  padding: 5px;
+  grid-template-rows: repeat(2, 4rem);
+  grid-gap: 0.5rem 0.3rem;
+  padding: 0.5rem;
   box-sizing: border-box;
   background-color: ${props => props.theme.borderColor};
-  border-radius: 10px;
+  border-radius: 1rem;
 `
 
 const Key = styled("button")`
@@ -20,11 +21,10 @@ const Key = styled("button")`
   align-items: center;
   cursor: pointer;
   border: none;
-  font-size: 20px;
+  font-size: 1.5rem;
   color: ${props => props.theme.textColor};
   background-color: ${props => props.theme.boxBgColor};
-  border-radius: 10px;
-  padding: 0px;
+  border-radius: .5rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   svg path{
     fill: ${props => props.theme.textColor};

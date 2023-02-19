@@ -146,13 +146,11 @@ html,
 
 :root {
   --game-max-width: 500px;
-  --default-gap: 10px;
+  --default-gap: 0.625rem;
   --header-height: 70px;
-  --digit-width: 70px;
-  --digit-height: 90px;
-  --digit-font-size: 48px;
-  --digit-border-radius: 5px;
-  --digit-border-width: 3px;
+  --digit-width: 4.375rem;
+  --digit-height: 5.625rem;
+  --digit-font-size: 3rem;
   --digit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1),
     0 10px 20px rgba(0, 0, 0, 0.06);
 }
