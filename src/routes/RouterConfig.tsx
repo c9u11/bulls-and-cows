@@ -6,6 +6,7 @@ import HomePage from "pages/Home";
 import DigitTestPage from "pages/Test/Digit";
 import RowTestPage from "pages/Test/Row";
 import Practice from "pages/Practice";
+import { ROUTES_PATH_HOME, ROUTES_PARAMS_ALL, ROUTES_PATH_CHALLENGE, ROUTES_PATH_PRACTICE, ROUTES_PATH_TEST_DIGIT, ROUTES_PATH_TEST_ROW } from '../constants/Routes';
 
 const RouterConfig = () => {
   return (
@@ -16,13 +17,13 @@ const RouterConfig = () => {
           <Modal></Modal>
         </>
       }>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/challenge" element={<Challenge />} />
-        <Route path="/practice" element={<Practice />} />
-        <Route path="/test/row" element={<RowTestPage />} />
-        <Route path="/test/digit" element={<DigitTestPage />} />
+        <Route path={ROUTES_PATH_HOME} element={<HomePage />} />
+        <Route path={ROUTES_PATH_CHALLENGE} element={<Challenge />} />
+        <Route path={ROUTES_PATH_PRACTICE} element={<Practice />} />
+        <Route path={ROUTES_PATH_TEST_ROW} element={<RowTestPage />} />
+        <Route path={ROUTES_PATH_TEST_DIGIT} element={<DigitTestPage />} />
       </Route>
-      <Route path="*" element={<Navigate replace to="/home" />} />
+      <Route path={ROUTES_PARAMS_ALL} element={<Navigate replace to={ROUTES_PATH_HOME} />} />
     </Routes>
   )
 }

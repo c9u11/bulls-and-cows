@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import styled from "styled-components"
+import { ROUTES_PATH_CHALLENGE, ROUTES_PATH_CUSTOM, ROUTES_PATH_HOME, ROUTES_PATH_PRACTICE } from '../../constants/Routes';
 
 const Center = styled.div`
 display: flex;
@@ -67,12 +68,29 @@ const menuBarVariants = {
   }
 }
 
-const menuList = ["Home", "Challenge", "Practice", "Custom"];
+const menuList = [
+  {
+    text: "Home",
+    path: ROUTES_PATH_HOME
+  },
+  {
+    text: "Challenge",
+    path: ROUTES_PATH_CHALLENGE
+  },
+  {
+    text: "Practice",
+    path: ROUTES_PATH_PRACTICE
+  },
+  {
+    text: "Custom",
+    path: ROUTES_PATH_CUSTOM
+  }
+];
 
 export const HeaderMain = () => {
   const [showing, setShowing] = useState(false);
   const pathName = useLocation().pathname;
-  let subTitle = pathName[1].toUpperCase() + pathName.slice(2);
+  const subTitle = pathName[1].toUpperCase() + pathName.slice(2);
   const toggleShowing = () => { setShowing(prev => !prev) }
   return (
     <Center>
@@ -88,8 +106,8 @@ export const HeaderMain = () => {
               {...menuBarVariants}
             >
               {
-                menuList.map(v => {
-                  return subTitle !== v ? <Link key={v} to={`/${v}`} onClick={toggleShowing}>{v}</Link> : null
+                menuList.map(info => {
+                  return pathName !== info.path ? <Link key={info.text} to={info.path} onClick={toggleShowing}>{info.text}</Link> : null
                 })
               }
             </MenuBar>

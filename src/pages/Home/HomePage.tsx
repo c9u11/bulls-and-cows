@@ -1,3 +1,4 @@
+import { ROUTES_PATH_CHALLENGE } from "constants/Routes"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
@@ -24,7 +25,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const goChallenge = () => {
-    navigate("/challenge");
+    navigate(ROUTES_PATH_CHALLENGE);
   }
 
   return (
