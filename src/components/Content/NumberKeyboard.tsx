@@ -43,9 +43,16 @@ const Key = styled("button")`
 
 export const NumberKeyboard = () => {
   const keyboard = useRef<HTMLInputElement>(null);
+  var clickEvent = (function () {
+    if ('ontouchstart' in document.documentElement === true) {
+      return 'touchend';
+    } else {
+      return 'click';
+    }
+  })();
   useEffect(() => {
     Array.from(keyboard.current?.children || []).forEach((el) => {
-      el.addEventListener("click", (e) => {
+      el.addEventListener(clickEvent, (e) => {
         const value = (e.currentTarget as HTMLElement).getAttribute("data-value");
         action(value);
       });
