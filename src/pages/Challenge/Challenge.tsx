@@ -11,6 +11,7 @@ import { CHALLENGE_DIGIT, CHALLENGE_UNIQUE } from "constants/ChallengeState";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
 import { RESULT_BOARD_PATH } from "constants/ModalRoute";
+import { toast } from "util/Toast";
 
 const Container = styled.div`
   display:flex;
@@ -52,7 +53,17 @@ export const Challenge = () => {
     });
 
     if (challengeState.gameStatus === GAME_STATE.SUCCESS || challengeState.gameStatus === GAME_STATE.FAIL) {
-      setTimeout(() => { setModal(RESULT_BOARD_PATH); }, 600 * 4 + 300)
+      let msg = '';
+      if (challengeState.gameStatus === GAME_STATE.FAIL) msg = answer;
+      else if (challengeState.boardState.length === 1) msg = 'Genius';
+      else if (challengeState.boardState.length === 2) msg = 'Magnificent';
+      else if (challengeState.boardState.length === 3) msg = 'Impressive';
+      else if (challengeState.boardState.length === 4) msg = 'Splendid';
+      else msg = 'Great';
+      toast(msg, 3000, 600 * 4 + 300);
+      setTimeout(() => {
+        setModal(RESULT_BOARD_PATH);
+      }, 600 * 4 + 300 + 3600);
     }
   }, [result, setModal])
   return (
