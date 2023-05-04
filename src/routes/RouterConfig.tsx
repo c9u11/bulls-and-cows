@@ -17,13 +17,14 @@ const RouterConfig = () => {
           <Modal></Modal>
         </>
       }>
-        <Route path={ROUTES_PATH_HOME} element={<HomePage />} />
+        {/* <Route path={ROUTES_PATH_HOME} element={<HomePage />} /> */}
+        <Route path={ROUTES_PATH_HOME} element={<Navigate replace to={ROUTES_PATH_CHALLENGE} />} />
         <Route path={ROUTES_PATH_CHALLENGE} element={<Challenge />} />
         <Route path={ROUTES_PATH_PRACTICE} element={<Practice />} />
         <Route path={ROUTES_PATH_TEST_ROW} element={<RowTestPage />} />
         <Route path={ROUTES_PATH_TEST_DIGIT} element={<DigitTestPage />} />
       </Route>
-      <Route path={ROUTES_PARAMS_ALL} element={<Navigate replace to={ROUTES_PATH_HOME} />} />
+      <Route path={ROUTES_PARAMS_ALL} element={<Navigate replace to={ROUTES_PATH_CHALLENGE} />} />
     </Routes>
   )
 }
