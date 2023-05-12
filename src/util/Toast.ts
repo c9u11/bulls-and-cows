@@ -1,5 +1,16 @@
-export function toast(msg: string, time: number = 3000, delay: number = 0) {
-  if (msg === "") return;
+export interface ToastInterface {
+  remove: () => void;
+}
+
+export function toast(
+  msg: string,
+  time: number = 3000,
+  delay: number = 0
+): ToastInterface {
+  const toastInstance: ToastInterface = {
+    remove: () => {},
+  };
+  if (msg === "") return toastInstance;
   const id = "custom-toast";
   const toastEl = document.createElement("span");
   toastEl.id = id;
@@ -20,13 +31,27 @@ export function toast(msg: string, time: number = 3000, delay: number = 0) {
     `;
   toastEl.innerText = msg;
   document.body.append(toastEl);
-  setTimeout(() => {
+
+  let delayTimeout: NodeJS.Timeout,
+    displayTimeout: NodeJS.Timeout,
+    removeTimeout: NodeJS.Timeout;
+
+  delayTimeout = setTimeout(() => {
     toastEl.style.opacity = "1";
-    setTimeout(() => {
+    displayTimeout = setTimeout(() => {
       toastEl.style.opacity = "0";
-      setTimeout(() => {
+      removeTimeout = setTimeout(() => {
         toastEl.remove();
       }, 500);
     }, time);
   }, delay);
+
+  toastInstance.remove = () => {
+    clearInterval(delayTimeout);
+    clearInterval(displayTimeout);
+    clearInterval(removeTimeout);
+    toastEl.remove();
+  };
+
+  return toastInstance;
 }
