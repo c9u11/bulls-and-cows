@@ -68,7 +68,7 @@ export const Challenge = () => {
     }
     return () => {
       clearTimeout(modalEvent);
-      resultToast.remove();
+      resultToast?.remove();
     }
   }, [result, setModal])
   return (
