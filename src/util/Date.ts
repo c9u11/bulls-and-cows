@@ -1,5 +1,8 @@
 export const dateToYYYYMMDD = (date: Date) => {
-  return `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
+  return `${date.getFullYear()}${`${date.getMonth() + 1}`.padStart(
+    2,
+    "0"
+  )}${`${date.getDate()}`.padStart(2, "0")}`;
 };
 
 export const isSameDate = (date1: Date, date2: Date) => {
