@@ -2,7 +2,7 @@ import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 import { Fireworks } from "fireworks-js/dist/react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getChallengeState } from "util/ChallengeState";
+import { copyChallengeState, getChallengeState } from "util/ChallengeState";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
 
 interface LabelValueInterface {
@@ -120,6 +120,17 @@ const options = {
   speed: 3,
 };
 
+const ShareBtn = styled.button`
+    cursor: pointer;
+    position: absolute;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius:0.6rem;
+    background-color: ${props => props.theme.accentColor};
+    color: ${props => props.theme.boxBgColor};
+    font-size: 20px;
+  `
+
 export const ResultBoard = () => {
   const challengeState = getChallengeState();
   const challengeStatistics = getChallengeStatistics();
@@ -167,6 +178,9 @@ export const ResultBoard = () => {
               })
             }
           </Center>
+        </Center>
+        <Center>
+          <ShareBtn onClick={copyChallengeState}>Share Result</ShareBtn>
         </Center>
       </Center>
     </>

@@ -9,6 +9,8 @@ import { CHALLENGE_UNIQUE } from "../constants/ChallengeState";
 import { isSameDate } from "./Date";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 import { addStatisticsData } from "./ChallengeStatistics";
+import { dateToYYYYMMDD } from "./Date";
+import { toast } from "./Toast";
 
 function initChallengeState(prev = DEFAULT_STATE) {
   const challengeState: ChallengeStateInterface = {
@@ -62,4 +64,28 @@ export function setChallengeState(challengeState: ChallengeStateInterface) {
     JSON.stringify(challengeState)
   );
   return challengeState;
+}
+
+export function copyChallengeState() {
+  const challengeState = getChallengeState();
+  if (challengeState.gameStatus === GAME_STATE.PROGRESS) return;
+  let data = `Bulls and Cows\n${dateToYYYYMMDD(
+    new Date(challengeState.lastCompletedTs)
+  )}\n${challengeState.boardState.length}/${CHALLENGE_LIFE}\n`;
+  for (let idx = 0; idx < CHALLENGE_LIFE; idx++) {
+    const input = challengeState.boardState[idx];
+    for (let digit = 0; digit < CHALLENGE_DIGIT; digit++) {
+      if (!input) data += "⬜️";
+      else if (input[digit] === challengeState.answer[digit]) data += "🟩";
+      else if (challengeState.answer.indexOf(input[digit]) !== -1) data += "🟨";
+      else data += "⬛️";
+    }
+    data += "\n";
+  }
+  try {
+    navigator.clipboard.writeText(data);
+    toast("Copied", 1000);
+  } catch {
+    toast("This browser is not supported.", 2000);
+  }
 }
