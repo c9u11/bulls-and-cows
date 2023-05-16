@@ -8,6 +8,7 @@ import { getChallengeStatistics } from "util/ChallengeStatistics";
 interface LabelValueInterface {
   label: string;
   value: string | number;
+  accent?: boolean;
 }
 
 interface GraphBarInterface extends LabelValueInterface {
@@ -34,12 +35,12 @@ const Title = styled.h1`
   font-weight: bolder;
   font-size: 20px;
   color : ${props => props.theme.textColor};
-`
+  `
 
 const Accent = styled.span`
   font-size: 64px;
   color: ${props => props.theme.accentColor};
-`
+  `
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,27 +50,30 @@ const Wrapper = styled.div`
   flex-direction: row;
   padding: 0px 80px;
   gap: 20px;
-`
+  `
 const Label = styled.span`
   width: 10px;
   font-weight: bold;
   color: ${props => props.theme.textColor};
   text-align: center;
-`
+  `
 const Bar = styled.div`
   height: 20px;
-  background-color: ${props => props.theme.accentColor};
   color: ${props => props.theme.boxBgColor};
   min-width: 10px;
   padding: 0px 10px;
   text-align: right;
-`
+  background-color: ${props => props.theme.emptyBorderColor};
+  &.accent {
+    background-color: ${props => props.theme.accentColor};
+  }
+  `
 
-const GraphBar = ({ label, value, max }: GraphBarInterface) => {
+const GraphBar = ({ label, value, max, accent }: GraphBarInterface) => {
   return (
     <Wrapper>
       <Label>{label}</Label>
-      <Bar style={{ width: max === value ? "100%" : `${value / max * 100}%` }}>{value}</Bar>
+      <Bar className={accent ? 'accent' : ''} style={{ width: max === value ? "100%" : `${value / max * 100}%` }}>{value}</Bar>
     </Wrapper>
   )
 }
@@ -81,7 +85,7 @@ const PanelWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   flex:1;
-`
+  `
 const Span = styled.span`
   font-weight: bold;
   color: ${props => props.theme.textColor};
@@ -92,7 +96,7 @@ const Span = styled.span`
   &.label {
     font-size: 14px;
   }
-`
+  `
 const Panel = ({ label, value }: LabelValueInterface) => {
   return (
     <PanelWrapper>
@@ -157,7 +161,7 @@ export const ResultBoard = () => {
               new Array(CHALLENGE_LIFE).fill('').map((_, idx) => {
                 return (
                   <Center key={idx + 1} className="row">
-                    <GraphBar label={`${idx + 1}`} value={challengeStatistics.guesses[idx + 1] || 0} max={max}></GraphBar>
+                    <GraphBar label={`${idx + 1}`} value={challengeStatistics.guesses[idx + 1] || 0} max={max} accent={challengeState.gameStatus === GAME_STATE.SUCCESS && challengeState.boardState.length === idx + 1}></GraphBar>
                   </Center>
                 )
               })
