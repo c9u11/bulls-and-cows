@@ -43,6 +43,9 @@ const focusFunc = (e: React.MouseEvent) => {
 let challengeState = getChallengeState();
 const answer = challengeState.answer;
 export const Challenge = () => {
+  useEffect(() => {
+    challengeState = getChallengeState();
+  }, [])
   getChallengeStatistics();
   const setModal = useSetRecoilState(modalAtom);
   const [result, setResult] = useState<string[]>(challengeState.boardState);

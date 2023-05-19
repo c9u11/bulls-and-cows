@@ -30,7 +30,7 @@ export function getChallengeState() {
     challengeState =
       (challengeStateString && JSON.parse(challengeStateString)) ||
       DEFAULT_STATE;
-    if (!isSameDate(new Date(challengeState.lastPlayedTs), new Date()))
+    if (!isSameDate(new Date(challengeState.lastStartedTs), new Date()))
       challengeState = initChallengeState(challengeState);
   } catch {
     challengeState = initChallengeState();
@@ -40,25 +40,28 @@ export function getChallengeState() {
 
 export function setChallengeState(challengeState: ChallengeStateInterface) {
   const currentDate = new Date();
-  const lastCompletedDate = new Date(challengeState.lastCompletedTs);
-  const currentTime = currentDate.getTime();
-  const isSuccessed =
-    challengeState.answer === challengeState.boardState.at(-1);
-  const isFailed =
-    !isSuccessed && challengeState.boardState.length >= CHALLENGE_LIFE;
-  const isFinished = isSuccessed || isFailed;
-  challengeState.lastPlayedTs = currentTime;
-  if (isFinished && !isSameDate(currentDate, lastCompletedDate)) {
-    if (isSuccessed) {
-      challengeState.lastCompletedTs = currentTime;
-      challengeState.gameStatus = GAME_STATE.SUCCESS;
-    } else if (isFailed) {
-      challengeState.lastCompletedTs = currentTime;
-      challengeState.gameStatus = GAME_STATE.FAIL;
+  if (!isSameDate(currentDate, new Date(challengeState.lastStartedTs))) {
+    challengeState = initChallengeState();
+  } else {
+    const lastCompletedDate = new Date(challengeState.lastCompletedTs);
+    const currentTime = currentDate.getTime();
+    const isSuccessed =
+      challengeState.answer === challengeState.boardState.at(-1);
+    const isFailed =
+      !isSuccessed && challengeState.boardState.length >= CHALLENGE_LIFE;
+    const isFinished = isSuccessed || isFailed;
+    challengeState.lastPlayedTs = currentTime;
+    if (isFinished) {
+      if (isSuccessed) {
+        challengeState.lastCompletedTs = currentTime;
+        challengeState.gameStatus = GAME_STATE.SUCCESS;
+      } else if (isFailed) {
+        challengeState.lastCompletedTs = currentTime;
+        challengeState.gameStatus = GAME_STATE.FAIL;
+      }
+      addStatisticsData(isSuccessed ? challengeState.boardState.length : 0);
     }
-    addStatisticsData(isSuccessed ? challengeState.boardState.length : 0);
   }
-
   window.localStorage.setItem(
     LOCAL_STORAGE_KEY,
     JSON.stringify(challengeState)
