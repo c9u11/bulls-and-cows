@@ -51,7 +51,7 @@ export function setChallengeState(challengeState: ChallengeStateInterface) {
       !isSuccessed && challengeState.boardState.length >= CHALLENGE_LIFE;
     const isFinished = isSuccessed || isFailed;
     challengeState.lastPlayedTs = currentTime;
-    if (isFinished) {
+    if (isFinished && !isSameDate(currentDate, lastCompletedDate)) {
       if (isSuccessed) {
         challengeState.lastCompletedTs = currentTime;
         challengeState.gameStatus = GAME_STATE.SUCCESS;
