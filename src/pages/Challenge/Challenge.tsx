@@ -10,7 +10,7 @@ import { getChallengeState, setChallengeState } from 'util/ChallengeState';
 import { CHALLENGE_DIGIT, CHALLENGE_UNIQUE } from "constants/ChallengeState";
 import { CHALLENGE_LIFE, GAME_STATE } from "constants/Game";
 import { getChallengeStatistics } from "util/ChallengeStatistics";
-import { RESULT_BOARD_PATH } from "constants/ModalRoute";
+import { HELP_PATH, RESULT_BOARD_PATH } from "constants/ModalRoute";
 import { ToastInterface, toast } from "util/Toast";
 
 const Container = styled.div`
@@ -34,6 +34,22 @@ const Board = styled.div`
   justify-content: center;
   flex: 1;
   gap: var(--default-gap);
+`
+
+
+const ModalBtn = styled.button`
+  cursor: pointer;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background-color: ${props => props.theme.accentColor};
+  color: ${props => props.theme.boxBgColor};
+  border-radius: 50%;
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bolder;
 `
 
 const focusFunc = (e: React.MouseEvent) => {
@@ -92,6 +108,7 @@ export const Challenge = () => {
         </Board>
         <NumberKeyboard></NumberKeyboard>
       </Game>
+      <ModalBtn onClick={() => { setModal(HELP_PATH) }}>Help</ModalBtn>
     </Container>
   );
 }
