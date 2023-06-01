@@ -57,7 +57,8 @@ export const NumberKeyboard = () => {
         action(value);
       });
     });
-  }, []);
+  }, [clickEvent]);
+
   return (
     <Keyboard ref={keyboard}>
       <Key className="row1" data-value={1}>1</Key>

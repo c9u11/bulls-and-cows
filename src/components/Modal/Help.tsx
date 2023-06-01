@@ -1,7 +1,5 @@
 import { Digit } from "components/Content/Digit"
-import { GAME_STATE } from "constants/Game"
 import styled from "styled-components"
-import { getChallengeState } from "util/ChallengeState"
 
 const Box = styled.div`
 display: flex;
@@ -23,12 +21,6 @@ const Title = styled.h1`
   font-weight: bolder;
   font-size: 20px;
   color : ${props => props.theme.textColor};
-`
-
-const Description = styled.p`
-  font-size: 16px;
-  font-weight: bolder;
-  color : ${props => props.theme.emptyBorderColor};
 `
 
 export const Help = () => {
