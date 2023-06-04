@@ -30,6 +30,7 @@ interface digitInfoInterface {
 
 export let focusChange: Function;
 export let action: Function;
+
 export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowInterface) => {
   const digitInfoObject: digitInfoInterface = {};
   for (let i = 0; i < digitNum; i++) {
@@ -65,8 +66,17 @@ export const EditableRow = ({ digitNum, unique = true, setResult }: EditableRowI
     setTimeout(() => (document.getElementById("editableRow")?.children[idx] as HTMLElement)?.focus(), 0)
   }
   action = (cmd: String) => {
-    let idx = Number(document.getElementById("focusEl")?.getAttribute("data-index"));
-    const preValue = (document.getElementById("focusEl") as HTMLInputElement)?.value;
+    let focusEl = document.getElementById("focusEl");
+    if (!focusEl) {
+      let focus = 0;
+      for (let i = 0; i < digitNum; i++) {
+        if (digitInfo[i].status === "typed") focus = i;
+      }
+      focusChange(focus);
+      return;
+    }
+    let idx = Number(focusEl?.getAttribute("data-index"));
+    const preValue = (focusEl as HTMLInputElement)?.value;
     switch (cmd) {
       case "ArrowLeft":
         focusChange(idx - 1);
