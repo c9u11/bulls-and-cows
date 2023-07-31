@@ -5,6 +5,7 @@ import { HeaderMain } from "./HeaderMain"
 import { SettingButton } from "./SettingButton"
 import { StatisticsButton } from "./StatisticsButton"
 import { Resizer } from "./Resizer"
+import { HelpButton } from "./HelpButton"
 
 const Container = styled.header`
   position: relative;
@@ -15,7 +16,6 @@ const Container = styled.header`
   align-items: center;
   justify-content: space-evenly;
   background-color: ${props => props.theme.boxBgColor};
-  over-flow: visible;
   height: var(--header-height);
   &>* {
     margin: 0% 1rem;
@@ -32,18 +32,13 @@ const Body = styled.div`
   color: ${props => props.theme.textColor};
 `
 
-const BlankIcon = styled.div`
-  width: 2rem;
-  height: 2rem;
-`
-
 export const BaseLayout = () => {
   return (
     <>
       <Resizer></Resizer>
       <Container>
         <ThemeChanger></ThemeChanger>
-        <BlankIcon></BlankIcon>
+        <HelpButton></HelpButton>
         <HeaderMain></HeaderMain>
         <StatisticsButton></StatisticsButton>
         <SettingButton></SettingButton>
