@@ -5,12 +5,11 @@ this.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(cacheData).then((cache) => {
       cache.addAll([
-        '/static/js/main.d651aa26.js',
-        '/static/css/main.d19daf27.css',
-        '/static/media/Pianaforma.47ba3c5182ea823592a0.ttf',
+        '/static/js/main.chunk.js',
+        '/static/js/0.chunk.js',
+        '/static/js/bundle.js',
         '/index.html',
         '/',
-        '/users',
       ]);
     })
   );
@@ -25,7 +24,7 @@ this.addEventListener('fetch', (event) => {
       const response = await event.preloadResponse;
       if (response) return response;
 
-      return fetch(event.request);
+      return fetch(event.request.clone());
     }());
   }
 });
