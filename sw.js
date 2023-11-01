@@ -18,14 +18,14 @@ this.addEventListener('install', (event) => {
 
 this.addEventListener('fetch', (event) => {
   if (!navigator.onLine) {
-    event.respondWith(
-      caches.match(event.request).then((resp) => {
-        if (resp) {
-          return resp;
-        }
-        let requestUrl = event.request.clone();
-        fetch(requestUrl);
-      })
-    );
+    event.respondWith(async function () {
+      const cachedResponse = await caches.match(event.request);
+      if (cachedResponse) return cachedResponse;
+
+      const response = await event.preloadResponse;
+      if (response) return response;
+
+      return fetch(event.request);
+    }());
   }
 });
