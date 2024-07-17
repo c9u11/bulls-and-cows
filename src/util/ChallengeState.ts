@@ -72,7 +72,7 @@ export function setChallengeState(challengeState: ChallengeStateInterface) {
 export function copyChallengeState() {
   const challengeState = getChallengeState();
   if (challengeState.gameStatus === GAME_STATE.PROGRESS) return;
-  let data = `BullsandCows.online\n${dateToYYYYMMDD(
+  let data = `https://bulls-and-cows-online.vercel.app\n${dateToYYYYMMDD(
     new Date(challengeState.lastCompletedTs)
   )}\n${challengeState.boardState.length}/${CHALLENGE_LIFE}\n`;
   for (let idx = 0; idx < CHALLENGE_LIFE; idx++) {

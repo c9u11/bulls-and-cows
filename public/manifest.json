@@ -19,7 +19,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://bullsandcows.online",
+  "start_url": "https://bulls-and-cows-online.vercel.app",
   "display": "standalone",
   "theme_color": "#ff9500",
   "background_color": "#e5e5e5",
@@ -27,17 +27,17 @@
   "dir": "auto",
   "lang": "en",
   "orientation": "any",
-  "scope": "https://bullsandcows.online",
+  "scope": "https://bulls-and-cows-online.vercel.app",
   "display_override": ["standalone", "fullscreen", "minimal-ui", "browser"],
   "shortcuts": [
     {
       "name": "challenge",
-      "url": "https://bullsandcows.online/#/challenge",
+      "url": "https://bulls-and-cows-online.vercel.app/#/challenge",
       "description": "today's challenge"
     },
     {
       "name": "Practice",
-      "url": "https://bullsandcows.online/#/practice",
+      "url": "https://bulls-and-cows-online.vercel.app/#/practice",
       "description": "bulls and cows pratice"
     }
   ],
